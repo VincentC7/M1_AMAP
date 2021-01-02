@@ -1,0 +1,32 @@
+{% extends "pages/layout.twig" %}
+
+
+{% block content %}
+    <div class="d-flex mb-3">
+        <h1>Gestion des sotcks</h1>
+        <a class="btn btn-primary ml-auto" href="{{ path_for("new_product") }}" role="button">Nouveau produit</a>
+    </div>
+
+    {% for product in products %}
+        {% if product.visible %}
+            <div class="mb-3 p-2 item-card d-flex">
+                <div class="ml-2 align-self-center d-flex">
+                    <div class="font-weight-bold">
+                        {{ product.nomproduit }}
+                    </div>
+                    &nbsp: {{ product.valeur }} {{ product.unite }} (en stock) ----- Prix unitaire
+                    : {{ product.prixunitaire }}€
+                </div>
+                <div class="ml-auto p-2 align-self-center">
+                    <a href="{{ path_for("edit_product", {id: product.id_produit}) }}" class="btn-icon">
+                        <img class="btn-img" src="{{ base_url() }}/images/edit.png" alt="trash">
+                    </a>
+                    <a href="{{ path_for("delete_product", {id: product.id_produit}) }}" class="btn-icon">
+                        <img class="btn-img" src="{{ base_url() }}/images/trash.png" alt="trash">
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+

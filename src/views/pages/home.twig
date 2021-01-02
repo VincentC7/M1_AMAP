@@ -1,0 +1,87 @@
+{% extends "pages/layout.twig" %}
+
+{% block content %}
+    <h1 class="text-center">Bienvenue sur notre application AMAP </h1>
+    <div id="progressbar_container">
+        <ul id="progressbar">
+            <li class="active">Définition du panier ET ajout des produits</li>
+            <li class="active">Consulter le panier</li>
+            <li class="active">Ouverture des commandes occasionnelles</li>
+            <li class="active">Récuperez votre panier</li>
+            <li class="active">Service terminé pour la semaine</li>
+        </ul>
+    </div>
+    <div id="week_basket" class="shadow p-3 mb-5">
+        <h3 class="text-center">Pannier de la semaine</h3>
+        <div id="products" class="card-deck">
+            {% for product in current_basket %}
+                <div class="mr-auto ml-auto mb-3 col-2">
+                    <div class="product-card m-auto w-100">
+                        <div class="font-weight-bold">
+                            {{ product.nomproduit }}
+                        </div>
+                        {{ product.valeur }} {{ product.unite }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if current_basket is empty %}
+                <div class="font-weight-bold m-auto">
+                    Le panier n'a pas encore été créé
+                </div>
+            {% endif %}
+        </div>
+        {% if current_basket is not empty %}
+            <div class="p-2 text-center">
+                <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}" role="button"> Annuler mon panier </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="week_basket" class="shadow p-3 mb-5">
+        <h3 class="text-center">Pannier de la semaine dernière</h3>
+        <div id="products" class="card-deck">
+            {% for product in last_basket %}
+                <div class="mr-auto ml-auto mb-3 col-2">
+                    <div class="product-card m-auto w-100">
+                        <div class="font-weight-bold">
+                            {{ product.nomproduit }}
+                        </div>
+                        {{ product.valeur }} {{ product.unite }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if last_basket is empty %}
+                <div class="font-weight-bold m-auto">
+                    Le panier est vide
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="week_occasional_order" class="shadow p-3 mb-5">
+        <h3 class="text-center"> Produits disponibles </h3>
+        <div id="products" class="card-deck">
+            {% for product in occasional_order %}
+                <div class="mr-auto ml-auto mb-3 col-2">
+                    <div class="product-card m-auto w-100">
+                        <div class="font-weight-bold">
+                            {{ product.nomproduit }}
+                        </div>
+                        {{ product.valeur }} {{ product.unite }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if occasional_order is empty %}
+                <div class="font-weight-bold m-auto">
+                    {{ occasional_msg }}
+                </div>
+            {% endif %}
+        </div>
+        {% if occasional_order is not empty %}
+            <div class="p-2 text-center">
+                <a class="btn btn-primary" href="{{ path_for("new_order") }}" role="button"> Commander un produit </a>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

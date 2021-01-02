@@ -1,0 +1,42 @@
+{% extends "pages/layout.twig"%}
+
+{% block content %}
+    <h1 class="text-center">
+        Edition d'un panier
+    </h1>
+    <hr>
+    <div class="container">
+        <form action="
+            {% if product.id_produit %}
+                {{ path_for("edit_product_save", {id: product.id_produit}) }}
+            {% else %}
+                {{ path_for("new_product_save")}}
+            {% endif %}
+            "method="post">
+            <div class="form-group">
+                <label for="product-name">Nom du produit</label>
+                <input type="text" class="form-control" name="product-name" id="product-name" value="{% if product.nomproduit %} {{ product.nomproduit }} {% endif %}" required>
+            </div>
+            <div class="row">
+                <div class="col form-group">
+                    <label for="product-qte">Quantitée</label>
+                    <input type="number" class="form-control" name="product-qte" id="product-qte" value={% if product.valeur %} {{ product.valeur }} {% endif %} required>
+                </div>
+                <div class="col form-group">
+                    <label for="product-unity">Unité</label>
+                    <select class="form-control" name="product-unity" id="product-unity">
+                        <option {% if product.unite == 'Unité(s)' %} selected {% endif %} value="Unité(s)">Unité</option>
+                        <option {% if product.unite == 'Kilogrammes' %} selected {% endif %} value="Kilogrammes">Kilogrammes</option>
+                        <option {% if product.unite == 'Grammes' %} selected {% endif %} value="Grammes">Grammes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="product-price">Prix unitaire (en €)</label>
+                <input type="number" step="0.01" class="form-control" name="product-price" id="product-price" value={% if product.prixunitaire %} {{ product.prixunitaire  }} {% endif %} required>
+            </div>
+            <button type="submit" class="btn btn-primary"> {% if product.id_produit %} Modifier {% else %} Ajouter {% endif %}</button>
+            <button type="submit" class="btn btn-danger">Annuler</button>
+        </form>
+    </div>
+{% endblock %}

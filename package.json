@@ -1,0 +1,8 @@
+{
+  "name": "M1_CSI_Appli_AMAP",
+  "version": "1.0.0",
+  "dependencies": {
+    "ajax": "0.0.4",
+    "jquery": "^3.5.1"
+  }
+}

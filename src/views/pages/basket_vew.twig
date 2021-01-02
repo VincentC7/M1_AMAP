@@ -1,0 +1,28 @@
+{% extends "pages/layout.twig" %}
+
+{% block content %}
+    <h1 class="text-center">
+        Panier de la semaine {{ week_number }} ({{ year }})
+    </h1>
+    <hr>
+    <div class="mb-2 mt-2">
+        Composition du panier
+    </div>
+    <div id="products" class="card-deck">
+        {% for product in products %}
+            <div class="mr-auto ml-auto mb-3 col-2">
+                <div class="product-card m-auto w-100">
+                    <div class="font-weight-bold">
+                        {{ product.nomproduit }}
+                    </div>
+                    {{ product.valeur }} {{ product.unite }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if products is empty %}
+        <div class="font-weight-bold">
+            Ce panier est vide
+        </div>
+    {% endif %}
+{% endblock %}

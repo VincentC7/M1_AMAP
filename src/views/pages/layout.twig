@@ -1,0 +1,30 @@
+{% extends "base.html.twig"%}
+
+{% block css %}
+{% endblock %}
+
+{% block body %}
+    {% include "nav.twig" %}
+
+    <div class="w-75 m-auto pt-3">
+        {% if message.valide %}
+            <div class="alert alert-success">
+                {{ message.valide }}
+            </div>
+        {% endif %}
+
+        {% if message.echec %}
+            <div class="alert alert-danger">
+                {{ message.echec }}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

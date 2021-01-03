@@ -1,5 +1,9 @@
 {% extends "pages/layout.twig" %}
 
+{% block css %}
+    <link href="{{ base_url() }}/CSS/order.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <h1 class="text-center">Effectuer une commande occasionnelle</h1>
     <hr>
@@ -21,17 +25,32 @@
     <hr>
     <div class="">
         <h3> Votre commande </h3>
-        <form>
-            {% for product in products %}
-                <div class="mr-auto ml-auto mb-3 col-2">
-                    <div class="product-card m-auto w-100">
-                        <div class="font-weight-bold">
-                            {{ product.nomproduit }}
+        <div class="w-50 m-auto">
+            <form action="#" method="post">
+                {% for product in products %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <div class="product-card m-auto w-100">
+                                <div class="font-weight-bold">
+                                    {{ product.nomproduit }}
+                                </div>
+                                {{ product.prixunitaire }}€/{{ product.unite }}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="input{{ product.id_produit }}" class="w-100 text-center">Quantité (0)</label>
+                            <input id="input{{ product.id_produit }}" name="input{{ product.id_produit }}" type="range" min="0" max="{{ product.valeur }}" value="0" class="slider w-100">
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </form>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Valider">
+                <input type="submit" id="cancel_sign_up" class="btn btn-danger" value="Annuler">
+            </form>
+        </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ base_url() }}/JS/order.js"></script>
 {% endblock %}
 

@@ -27,3 +27,9 @@
     background: #4CAF50;
     cursor: pointer;
 }
+
+#order_price {
+    height: fit-content;
+    border-bottom: solid black 1px;
+    align-self: center;
+}

@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS Commande (
 	id_commande SERIAL,
 	dateDemande TIMESTAMP NOT NULL,
 	statut VARCHAR(25) NOT NULL,
-	dateReponse TIMESTAMP NOT NULL,
+	dateReponse TIMESTAMP,
 	prixTotal FLOAT(10) NOT NULL,
 	utilisateur INTEGER NOT NULL,
 	PRIMARY KEY(id_commande),

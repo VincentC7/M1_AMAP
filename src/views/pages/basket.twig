@@ -9,7 +9,7 @@
     {% for basket in baskets %}
         <div class="mb-3 p-2 item-card d-flex">
             <div class="ml-2 align-self-center d-flex">
-                Panier de la semaine {{ basket.numsemaine }} (2020)
+                Panier de la semaine {{ basket.numsemaine }} ({{basket.year}})
             </div>
             <div class="ml-auto p-2 align-self-center position-relative">
                 <a href="{{ path_for("vew_basket", {id: basket.id_panier}) }}" class="btn-icon">

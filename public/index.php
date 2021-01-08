@@ -55,7 +55,7 @@ $app->post('/Panier/{id}/Vider', BasketController::class.":clear")->setName("cle
 $app->get('/Panier/{id}/Cancel', BasketController::class.":cancel")->setName("cancel_basket");
 
 //Commandes occassionnelles
-$app->get('/CommandeOccassionnelle', OrderControle::class.":new")->setName("new_order");
-$app->post('/CommandeOccassionnelle', OrderControle::class.":new")->setName("new_order_save");
+$app->get('/CommandeOccassionnelle', OrderControle::class.":order_form")->setName("new_order");
+$app->post('/CommandeOccassionnelle', OrderControle::class.":order_save")->setName("new_order_save");
 
 $app->run();

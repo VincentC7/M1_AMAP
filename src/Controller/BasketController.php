@@ -11,7 +11,7 @@ class BasketController extends Controller
 {
     public function index(RequestInterface $request, ResponseInterface $response) {
         $pdo = $this->get_PDO();
-        $stmt = $pdo->prepare("SELECT * FROM panier;");
+        $stmt = $pdo->prepare("SELECT id_panier,numsemaine,date_part('year',t.datedebut) as year FROM panier inner join trimestre t on panier.trimestre = t.id_trimestre;");
         $stmt->execute();
         $baskets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->render($response, 'pages/basket.twig', ['baskets' => $baskets]);
@@ -28,9 +28,9 @@ class BasketController extends Controller
         }
         $week_number = date('W');
         $year = date('Y');
-        $year = "2020";
+
         $stmt = $pdo->prepare("select * from panier inner join trimestre t on panier.trimestre = t.id_trimestre WHERE numsemaine = ? and datedebut BETWEEN ? and ?;");
-        $stmt->execute([$week_number,$year.'-01-01',$year.'-12-31']);
+        $stmt->execute([intval($week_number),$year.'-01-01',$year.'-12-31']);
         $basket = $stmt->fetch();
         $products = [];
         if (isset($basket['id_panier'])){ //basket exist
@@ -39,7 +39,8 @@ class BasketController extends Controller
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $stmt = $pdo->prepare("INSERT INTO panier (numsemaine,trimestre) VALUES (?,?)");
-            //$stmt->execute([$week_number,5]);
+            $stmt = $pdo->prepare("INSERT INTO panier (numsemaine,trimestre) VALUES (?,?)");
+            $stmt->execute([$week_number,6]);
         }
         $stmt = $pdo->prepare("Select * from produit where visible = true and valeur > 0 and id_produit not in (select produit from compose where panier = ?)");
         $stmt->execute([$basket["id_panier"]]);

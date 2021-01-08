@@ -26,7 +26,7 @@
     <div class="">
         <h3> Votre commande </h3>
         <div class="w-50 m-auto">
-            <form action="#" method="post">
+            <form action="#" method="post" id="order_form">
                 {% for product in products %}
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -39,12 +39,17 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="input{{ product.id_produit }}" class="w-100 text-center">Quantité (0)</label>
-                            <input id="input{{ product.id_produit }}" name="input{{ product.id_produit }}" type="range" min="0" max="{{ product.valeur }}" value="0" class="slider w-100">
+                            <input id="input{{ product.id_produit }}" name="input{{ product.id_produit }}" type="range" min="0" max="{{ product.valeur }}" value="0" class="slider w-100" data-price="{{ product.prixunitaire }}">
                         </div>
                     </div>
                 {% endfor %}
-                <input type="submit" class="btn btn-primary" value="Valider">
-                <input type="submit" id="cancel_sign_up" class="btn btn-danger" value="Annuler">
+                <div class="d-flex">
+                    <input type="submit" class="btn btn-primary mr-2" value="Valider">
+                    <input type="submit" id="cancel_order" class="btn btn-danger" value="Annuler" data-url="{{ path_for("home") }}">
+                    <div id="order_price" class="align-center ml-auto font-weight-bold">
+                       Total : 0 €
+                    </div>
+                </div>
             </form>
         </div>
     </div>

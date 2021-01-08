@@ -8,16 +8,15 @@ use Psr\Http\Message\ResponseInterface;
 
 class HomeController extends Controller {
 
-    private $occasional_order_start_day = "Sunday";
+    private $occasional_order_start_day = "Friday";
     private $occasional_order_start_hour = 12;
-    private $occasional_order_end_day = "Monday";
+    private $occasional_order_end_day = "Sunday";
     private $occasional_order_end_hour = 9;
 
     public function index(RequestInterface $request, ResponseInterface $response){
         $pdo = $this->get_PDO();
         $week_number = date('W');
         $year = date('Y');
-        $year = "2020";
 
         $stmt = $pdo->prepare("select * from panier inner join trimestre t on panier.trimestre = t.id_trimestre WHERE numsemaine = ? and datedebut BETWEEN ? and ?;");
         $stmt->execute([$week_number,$year.'-01-01',$year.'-12-31']);

@@ -1,5 +1,6 @@
 ##Prérequis
-php 7 minimum
+ 1. php 7 minimum
+ 2. composer (https://getcomposer.org/download/)
 
 ##Installation des packages
 dans la console à la racine du projet: 

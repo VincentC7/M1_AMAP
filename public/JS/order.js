@@ -9,6 +9,10 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $(".refuse_order_btn").click(function () {
+        $(this).prev().toggleClass("d-none");
+    })
 });
 
 let total_price = 0;
@@ -50,3 +54,5 @@ function update_total_order_price() {
     });
     $('#order_price').text("Total : "+total_price.toFixed(2) +"€");
 }
+
+

@@ -8,6 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 
 
 class Controller {
+
+    protected $user_id;
+    protected $user_role = "Visitor";
     protected $container;
 
     /**

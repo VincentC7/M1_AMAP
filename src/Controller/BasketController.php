@@ -92,7 +92,7 @@ class BasketController extends Controller
         return $this->redirect($response,'edit_basket');
     }
 
-    public function vew(RequestInterface $request, ResponseInterface $response, $args){
+    public function view(RequestInterface $request, ResponseInterface $response, $args){
         $id_basket = $args["id"];
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("SELECT numsemaine,to_char( datedebut, 'YYYY') as year from panier as p inner join trimestre as t on p.trimestre = t.id_trimestre where id_panier = ?");

@@ -8,9 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class HomeController extends Controller {
 
-    private $occasional_order_start_day = "Friday";
+    private $occasional_order_start_day = "Monday";
     private $occasional_order_start_hour = 12;
-    private $occasional_order_end_day = "Sunday";
+    private $occasional_order_end_day = "Tuesday";
     private $occasional_order_end_hour = 9;
 
     public function index(RequestInterface $request, ResponseInterface $response){

@@ -50,12 +50,16 @@ $app->get('/Panier', BasketController::class.":index")->setName("basket");
 $app->get('/Panier/Nouveau', BasketController::class.":basket_form")->setName("edit_basket");
 $app->post('/Panier/{id}/AjouterProduit', BasketController::class.":add")->setName("add_product_to_basket");
 $app->get('/Panier/{id}/SupprimerPorduit/{id_product}', BasketController::class.":remove")->setName("remove_product_from_basket");
-$app->get('/Panier/{id}', BasketController::class.":vew")->setName("vew_basket");
+$app->get('/Panier/{id}', BasketController::class.":view")->setName("vew_basket");
 $app->post('/Panier/{id}/Vider', BasketController::class.":clear")->setName("clear_basket");
 $app->get('/Panier/{id}/Cancel', BasketController::class.":cancel")->setName("cancel_basket");
 
 //Commandes occassionnelles
 $app->get('/CommandeOccassionnelle', OrderControle::class.":order_form")->setName("new_order");
 $app->post('/CommandeOccassionnelle', OrderControle::class.":order_save")->setName("new_order_save");
+$app->get('/CommandeOccassionnelle/Gestion', OrderControle::class.":index")->setName("order_management");
+$app->get('/CommandeOccassionnelle/{order_id}/Accepter', OrderControle::class.":accept_order")->setName("accept_order");
+$app->get('/CommandeOccassionnelle/{order_id}/Valider', OrderControle::class.":validate_order")->setName("validate_order");
+$app->get('/CommandeOccassionnelle/{order_id}/Refuser', OrderControle::class.":refuse_order")->setName("refuse_order");
 
 $app->run();

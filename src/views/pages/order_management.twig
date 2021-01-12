@@ -1,0 +1,26 @@
+{% extends "pages/layout.twig" %}
+
+
+{% block content %}
+    <h1 class="text-center"> Gestion des commandes occassionnelles </h1>
+
+    {% for order in orders %}
+        <div class="mb-3 p-2 item-card d-flex">
+            <div class="ml-2 align-self-center d-flex">
+                Commande N° {{ order.id_commande }}
+            </div>
+            <div class="ml-auto p-2 align-self-center">
+
+                <a href="{{ path_for("accept_order", { order_id: order.id_commande }) }}" class="btn-icon">
+                    <img class="btn-img" src="{{ base_url() }}/images/validate.png" alt="validate">
+                </a>
+                <a class="btn btn-danger d-none" href="{{ path_for("refuse_order", { order_id: order.id_commande }) }}" role="button">Refuser la commande</a>
+                <img class="btn-img refuse_order_btn" src="{{ base_url() }}/images/refuse.png" alt="refuse">
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script src="{{ base_url() }}/JS/order.js"></script>
+{% endblock   %}

@@ -10,6 +10,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class OrderControle extends Controller {
 
+    private static $PENDING_ORDER = "En cours";
+    private static $WAITING_VALIDATION_ORDER = "En cours de Validation";
+    private static $REFUSED_ORDER = "Refusée";
+    private static $CANCELED_ORDER = "Annulée";
+    private static $VALIDATED_ORDER = "Validée";
+
     public function order_form(RequestInterface $request, ResponseInterface $response) {
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("SELECT * FROM produit where valeur > 0;");
@@ -21,7 +27,7 @@ class OrderControle extends Controller {
     public function order_save(RequestInterface $request, ResponseInterface $response) {
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("INSERT INTO commande (datedemande, statut, prixtotal, utilisateur) VALUES (?,?,?,?)");
-        $stmt->execute([date('Y-m-d H:i:s'), 'En attente de traitement', 0, 4]);
+        $stmt->execute([date('Y-m-d H:i:s'), self::$PENDING_ORDER , 0, 4]);
         $id = $pdo->lastInsertId();
         $params = $request->getParams();
         $total = 0;
@@ -42,4 +48,38 @@ class OrderControle extends Controller {
         $this->afficher_message('Votre commande à été prise en compte');
         return $this->redirect($response,'home');
     }
+
+    public function index(RequestInterface $request, ResponseInterface $response){
+        $pdo = $this->get_PDO();
+        $stmt = $pdo->prepare("SELECT * FROM commande where statut = ? order by datedemande");
+        $stmt->execute([self::$PENDING_ORDER]);
+        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->render($response, 'pages/order_management.twig', ['orders' => $orders]);
+    }
+
+    public function accept_order(RequestInterface $request, ResponseInterface $response,$args){
+        return $this->answer_order($response, $args['order_id'], self::$WAITING_VALIDATION_ORDER);
+    }
+
+    public function refuse_order(RequestInterface $request, ResponseInterface $response,$args){
+        return $this->answer_order($response, $args['order_id'], self::$REFUSED_ORDER);
+    }
+
+    private function answer_order(ResponseInterface $response, $id_order, $answer){
+        $pdo = $this->get_PDO();
+        $stmt = $pdo->prepare("UPDATE commande SET statut = ?, datereponse = ? where id_commande = ?");
+        $resultat = $stmt->execute([$answer, date('Y-m-d H:i:s') , intval($id_order)]);
+        if ($resultat) {
+            $answer_text = $answer == self::$WAITING_VALIDATION_ORDER ? 'acceptée' : 'refusée';
+            $this->afficher_message('La commande a été '.$answer_text.' avec succes '. $id_order);
+        } else {
+            $this->afficher_message('Erreur : Un problème est survenue veuillez ressayer', 'echec');
+        }
+        return $this->redirect($response,'order_management');
+    }
+
+    public function validate_order(RequestInterface $request, ResponseInterface $response){
+        $pdo = $this->get_PDO();
+    }
+
 }

@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS Produit (
 	unite VARCHAR(25) NOT NULL,
 	valeur FLOAT(10) NOT NULL,
 	prixUnitaire FLOAT(10),
+	visible bool,
 	PRIMARY KEY(id_produit)
 );
 

@@ -1,4 +1,4 @@
--- !!! verifier les todo !!!
+--verifier les todo
 
 --creer les groupes
 create group utilisateur;
@@ -8,6 +8,7 @@ create group producteur;
 
 --abonne a les droits de utilisateur
 grant utilisateur to abonne;
+grant utilisateur to producteur;
 
 --admin_amap
 grant select on all tables in SCHEMA public to admin_amap;
@@ -16,7 +17,6 @@ grant update (etat) on table abonnement to admin_amap;
 grant update on parametre to admin_amap;
 
 --producteur
-TODO upd utilisateur (procedure)
 grant select (nom, prenom, tel, identifiant, role) on table utilisateur to producteur
 grant insert on produit to producteur
 grant insert on panier to producteur
@@ -33,9 +33,8 @@ grant insert on commande to utilisateur
 grant insert on contenucommande to utilisateur
 grant insert on abonnement to utilisateur
 
-TODO upd utilisateur (procedure)
-TODO upd abonnement (procedure)
+grant update (nom, prenom, tel, motdepasse) on table utilisateur to utilisateur
+grant update (etat) on table abonnement to utilisateur
 
 --abonne
 grant insert on refus to abonne
-TODO upd abonnement (procedure)

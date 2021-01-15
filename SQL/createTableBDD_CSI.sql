@@ -2,10 +2,10 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 	id_utilisateur SERIAL,
 	nom VARCHAR(25) NOT NULL,
 	prenom VARCHAR(25) NOT NULL,
-    tel VARCHAR(25) NOT NULL,
+    	tel VARCHAR(25) NOT NULL,
 	identifiant VARCHAR(150) NOT NULL,
 	motDePasse VARCHAR(25) NOT NULL,
-	role VARCHAR(25) NOT NULL,
+	role VARCHAR(25) NOT NULL CHECK(role in ('Guest','User','Administrator', 'Abonné', 'Non abonné', 'Producteur', 'Admin')),
 	PRIMARY KEY(id_utilisateur)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Abonnement (
 	id_abonnement SERIAL,
 	dateDemandeAbo TIMESTAMP NOT NULL,
  	dateDebutAbo TIMESTAMP NOT NULL,
-	etat VARCHAR(25) NOT NULL,
+	etat VARCHAR(25) NOT NULL CHECK(etat in ('En cours', 'Validé', 'Sur liste d’attente', 'En attente de paiement', 'Annulé', 'Résilié')),
 	datePaiement TIMESTAMP NOT NULL,
 	utilisateur INTEGER,
 	trimestre INTEGER,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS Compose (
 CREATE TABLE IF NOT EXISTS Commande (
 	id_commande SERIAL,
 	dateDemande TIMESTAMP NOT NULL,
-	statut VARCHAR(25) NOT NULL,
+	statut VARCHAR(25) NOT NULL CHECK(statut in ('En cours', 'En cours de Validation', 'Validée', 'Refusée', 'Annulée')),
 	dateReponse TIMESTAMP,
 	prixTotal FLOAT(10) NOT NULL,
 	utilisateur INTEGER NOT NULL,

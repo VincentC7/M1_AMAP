@@ -5,6 +5,7 @@ create group utilisateur;
 create group abonne;
 create group admin_amap;
 create group producteur;
+create group visiteur;
 
 --abonne a les droits de utilisateur
 grant utilisateur to abonne;
@@ -37,3 +38,10 @@ grant update (etat) on table abonnement to utilisateur
 
 --abonne
 grant insert on refus to abonne
+
+--visiteur
+grant insert on utilisateur to visiteur
+
+grant select on trimestre to visiteur
+grant select on panier to visiteur
+grant select on produit to visiteur

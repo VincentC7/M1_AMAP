@@ -15,11 +15,11 @@ create group producteur;
 create group visiteur;
 
 --affectation des roles aux utilisateurs
-grant utlisateur to user_non_abonne
-grant abonne to user_abonne
-grant admin_amap to user_admin_amap
-grant producteur to user_producteur
-grant visiteur to user_visiteur
+grant utlisateur to user_non_abonne;
+grant abonne to user_abonne;
+grant admin_amap to user_admin_amap;
+grant producteur to user_producteur;
+grant visiteur to user_visiteur;
 
 --abonne a les droits de utilisateur
 grant utilisateur to abonne;

@@ -119,6 +119,16 @@ class BasketController extends Controller
     }
 
     public function cancel(RequestInterface $request, ResponseInterface $response, $args) {
-
+        $id_basket = $args["id"];
+        $pdo = $this->get_PDO();
+        $stmt = $pdo->prepare("INSERT INTO refus (utilisateur, panier) VALUES (?,?);");
+        $user = 4; //$_SESSION['user_id'];
+        $resultat = $stmt->execute([$user,$id_basket]);
+        if ($resultat) {
+            $this->afficher_message('Le panier à bien été refusé');
+        } else {
+            $this->afficher_message('Erreur : Un problème est survenue lors du refus du panier veuillez réessayer', 'echec');
+        }
+        return $this->redirect($response,'home');
     }
 }

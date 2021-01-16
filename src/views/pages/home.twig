@@ -30,7 +30,7 @@
                 </div>
             {% endif %}
         </div>
-        {% if user_role == "Non Abonné" or user_role == "postgres" %}
+        {% if user_role == "Non Abonné" %}
             {% if current_basket is not empty %}
                 <div class="d-flex" id="subscribe">
                     <div class="font-weight-bold" id="textsubscribe">
@@ -41,10 +41,13 @@
                     </div>
                 </div>
             {% endif %}
-        {% elseif user_role == "Abonné" %}
-            {% if current_basket is not empty %}
-                <div class="p-2 text-center">
-                    <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}" role="button"> Annuler mon panier </a>
+        {% elseif user_role == "Abonné" or user_role == "postgres" %}
+            {% if current_basket is not empty and has_refus is empty %}
+                <div class="text-center">
+                    <button class="btn btn-danger" id="cancel_basket"> Annuler mon panier </button>
+                </div>
+                <div class="text-center d-none">
+                    <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}" role="button">Valider l'annulation de mon panier </a>
                 </div>
             {% endif %}
         {% endif %}

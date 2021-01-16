@@ -8,9 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class HomeController extends Controller {
 
-    private $occasional_order_start_day = "Monday";
+    private $occasional_order_start_day = "Tuesday";
     private $occasional_order_start_hour = 12;
-    private $occasional_order_end_day = "Tuesday";
+    private $occasional_order_end_day = "Wednesdays";
     private $occasional_order_end_hour = 9;
 
     public function index(RequestInterface $request, ResponseInterface $response){
@@ -34,14 +34,15 @@ class HomeController extends Controller {
         $day = date('l');
         $hour = intval(date('G'));
         $occassional_msg = "Pas de produits disponibles";
-        if (($day == $this->occasional_order_start_day && $hour > $this->occasional_order_start_hour || $day == $this->occasional_order_end_day  && $hour < $this->occasional_order_end_hour )) {
-            $stmt = $pdo->prepare("select valeur,nomproduit,unite from produit WHERE valeur > 0;");
-            $stmt->execute();
-            $occassional = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }else{
-            $occassional_msg = "Les commandes occassionnelles sont actuellements fermés";
-        }
 
-        $this->render($response,'pages/home.twig', ['current_basket'=>$current_basket,'last_basket'=>$last_basket,'occasional_order'=>$occassional,'occasional_msg'=>$occassional_msg,'current_basket_id'=>$basket['id_panier']]);
+        $stmt = $pdo->prepare("select * from refus where utilisateur = ? and panier = ?");
+        $stmt->execute([5,$basket['id_panier']]);
+        $has_refus = $stmt->fetch();
+
+        $stmt = $pdo->prepare("select valeur,nomproduit,unite from produit WHERE valeur > 0;");
+        $stmt->execute();
+        $occassional = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->render($response,'pages/home.twig', ['current_basket'=>$current_basket,'last_basket'=>$last_basket,'occasional_order'=>$occassional,'occasional_msg'=>$occassional_msg,'current_basket_id'=>$basket['id_panier'],'has_refus'=>$has_refus]);
     }
 }

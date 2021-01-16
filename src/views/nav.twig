@@ -6,19 +6,34 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path_for('stock') }}">Stock</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path_for('basket') }}">Paniers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path_for('order_management') }}">Commandes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path_for('sign_in') }}">Connexion</a>
-                </li>
+                {% if user_role == "Admin" or user_role == "Producteur"  or user_role == "postgres" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('stock') }}">Stock</a>
+                    </li>
+                {% endif %}
+
+                {% if user_role == "Admin" or user_role == "Producteur"  or user_role == "postgres" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('basket') }}">Paniers</a>
+                    </li>
+                {% endif %}
+
+                {% if user_role == "Non abonné" or user_role == "Abonné" or user_role == "postgres" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('order_management') }}">Mes commandes</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
+
+        {% if user_role == "Visiteur" or user_role == "postgres" %}
+            <form class="form-inline" action="{{ path_for('sign_in') }}">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Connexion</button>
+            </form>
+        {% else %}
+            <form class="form-inline" action="{{ path_for('sign_in') }}">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Déconnection</button>
+            </form>
+        {% endif %}
     </div>
 </nav>

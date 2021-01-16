@@ -1,8 +1,8 @@
 --verifier les todo
 
 --Création des utilisateurs
-create user user_admin_amap with encrypted password 'admin_amap'; -- admin_amap
-create user user_producteur with encrypted password 'producteur'; -- producteur
+create user user_admin_amap with encrypted password 'user_admin_amap'; -- admin_amap
+create user user_producteur with encrypted password 'user_producteur'; -- producteur
 create user user_visiteur with encrypted password 'user_visiteur'; -- visiteur
 create user user_abonne with encrypted password 'user_abonne'; -- utilisateur
 create user user_non_abonne with encrypted password 'user_non_abonne'; -- abonne

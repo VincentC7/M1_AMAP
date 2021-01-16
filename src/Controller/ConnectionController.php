@@ -30,6 +30,12 @@ class ConnectionController extends Controller {
             $this->afficher_message('Identifiant ou mot de passe incorrect', 'echec');
             return $this->redirect($response,'sign_in_page');
         }
+        $this->login($user['id_utilisateur'], $user['role']);
+        return $this->redirect($response,'home');
+    }
+
+    public function sign_out(RequestInterface $request, ResponseInterface $response){
+        $this->logout();
         return $this->redirect($response,'home');
     }
 

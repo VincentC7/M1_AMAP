@@ -57,7 +57,7 @@ class OrderControle extends Controller {
         $this->render($response, 'pages/order_management.twig', ['orders' => $orders]);
     }
 
-    public function accept_order(RequestInterface $request, ResponseInterface $response,$args){
+    public function accept_order(RequestInterface $request, ResponseInterface $response,$args) {
         return $this->answer_order($response, $args['order_id'], self::$WAITING_VALIDATION_ORDER);
     }
 
@@ -65,12 +65,12 @@ class OrderControle extends Controller {
         return $this->answer_order($response, $args['order_id'], self::$REFUSED_ORDER);
     }
 
-    private function answer_order(ResponseInterface $response, $id_order, $answer){
+    private function answer_order(ResponseInterface $response, $id_order, $answer) {
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("UPDATE commande SET statut = ?, datereponse = ? where id_commande = ?");
         $resultat = $stmt->execute([$answer, date('Y-m-d H:i:s') , intval($id_order)]);
         if ($resultat) {
-            $answer_text = $answer == self::$WAITING_VALIDATION_ORDER ? 'acceptée' : 'refusée';
+            $answer_text = $answer == self::$REFUSED_ORDER ? 'refusée' : 'acceptée';
             $this->afficher_message('La commande a été '.$answer_text.' avec succes '. $id_order);
         } else {
             $this->afficher_message('Erreur : Un problème est survenue veuillez ressayer', 'echec');
@@ -78,8 +78,8 @@ class OrderControle extends Controller {
         return $this->redirect($response,'order_management');
     }
 
-    public function validate_order(RequestInterface $request, ResponseInterface $response){
-        $pdo = $this->get_PDO();
+    public function validate_order(RequestInterface $request, ResponseInterface $response,$args){
+        return $this->answer_order($response, $args['order_id'], self::$VALIDATED_ORDER);
     }
 
 }

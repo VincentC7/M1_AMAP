@@ -11,7 +11,7 @@ class BasketController extends Controller
 {
     public function index(RequestInterface $request, ResponseInterface $response) {
         $pdo = $this->get_PDO();
-        $stmt = $pdo->prepare("SELECT id_panier,numsemaine,date_part('year',t.datedebut) as year FROM panier inner join trimestre t on panier.trimestre = t.id_trimestre;");
+        $stmt = $pdo->prepare("SELECT id_panier,numsemaine,date_part('year',t.datedebut) as year FROM panier inner join trimestre t on panier.trimestre = t.id_trimestre order by id_panier desc ;");
         $stmt->execute();
         $baskets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->render($response, 'pages/basket.twig', ['baskets' => $baskets]);

@@ -5,6 +5,7 @@ use M1_CSI_Appli_AMAP\Controller\ConnectionController;
 use M1_CSI_Appli_AMAP\Controller\HomeController;
 use M1_CSI_Appli_AMAP\Controller\OrderControle;
 use M1_CSI_Appli_AMAP\Controller\StockController;
+use M1_CSI_Appli_AMAP\Controller\SubscriptionController;
 use M1_CSI_Appli_AMAP\Middleware\ErreurMiddleware;
 use M1_CSI_Appli_AMAP\Middleware\OldMiddleware;
 use Slim\App;
@@ -70,5 +71,9 @@ $app->get('/CommandeOccassionnelle/Gestion', OrderControle::class.":index")->set
 $app->get('/CommandeOccassionnelle/{order_id}/Accepter', OrderControle::class.":accept_order")->setName("accept_order");
 $app->get('/CommandeOccassionnelle/{order_id}/Valider', OrderControle::class.":validate_order")->setName("validate_order");
 $app->get('/CommandeOccassionnelle/{order_id}/Refuser', OrderControle::class.":refuse_order")->setName("refuse_order");
+
+//Sub
+$app->get('/Abonnement/Nouveau', SubscriptionController::class.":subscription_form")->setName("subscription_form");
+$app->post('/Abonnement/Nouveau', SubscriptionController::class.":new")->setName("subscribe");
 
 $app->run();

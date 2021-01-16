@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS Trimestre (
 CREATE TABLE IF NOT EXISTS Abonnement (
 	id_abonnement SERIAL,
 	dateDemandeAbo TIMESTAMP NOT NULL,
- 	dateDebutAbo TIMESTAMP NOT NULL,
+ 	dateDebutAbo TIMESTAMP,
 	etat VARCHAR(25) NOT NULL CHECK(etat in ('En cours', 'Validé', 'Sur liste d’attente', 'En attente de paiement', 'Annulé', 'Résilié')),
-	datePaiement TIMESTAMP NOT NULL,
+	datePaiement TIMESTAMP,
 	utilisateur INTEGER,
 	trimestre INTEGER,
 	PRIMARY KEY(id_abonnement),

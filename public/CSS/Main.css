@@ -127,6 +127,16 @@ a {
     padding: 5px;
 }
 
+#subscribe{
+    width: fit-content;
+    margin: auto;
+}
+
+#textsubscribe{
+    height: fit-content;
+    margin: auto 10px;
+}
+
 
 
 

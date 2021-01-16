@@ -1,0 +1,35 @@
+{% extends "pages/layout.twig" %}
+
+{% block content %}
+    <h1 class="text-center">
+        S'abonner
+    </h1>
+    <div class="mb-3 text-justify">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis varius dolor, sodales porttitor neque. Donec condimentum nulla sem, et porta ipsum gravida nec. Cras blandit dictum augue, sed scelerisque ligula congue at. Nullam viverra pulvinar dolor, vel posuere nisi consectetur id. Pellentesque ultricies sed dui eu condimentum. Aliquam commodo feugiat nisi vitae ornare. In sit amet consequat dolor, nec dignissim felis. Mauris massa urna, semper ut mollis et, eleifend quis orci. Nunc nec libero quis ipsum lacinia commodo. Pellentesque rhoncus luctus eleifend. Aenean eu tristique tortor. Maecenas venenatis mauris neque, aliquam molestie ex hendrerit eget. Proin non lacus nunc. Integer nibh metus, pretium ac sapien quis, molestie accumsan odio. In hac habitasse platea dictumst.
+
+        Proin venenatis erat metus, non egestas justo dignissim sit amet. Maecenas ut bibendum erat. Aliquam eu dui efficitur, dapibus sem varius, vestibulum sapien. Cras sagittis ullamcorper risus at eleifend. Morbi maximus commodo lorem at tempor. Phasellus at metus ut ligula blandit semper fringilla id odio. Nulla ut mauris efficitur, malesuada diam eget, mollis ex. Nam eget risus interdum tellus pretium cursus vel in nibh. Maecenas eu massa varius, ullamcorper elit et, consequat risus. Sed sit amet sem purus.
+
+        Fusce dignissim, nulla at porttitor tempor, enim nisl cursus est, non tincidunt massa justo a arcu. Etiam efficitur imperdiet lectus, et condimentum elit. In mattis orci metus, sit amet tempus tellus vestibulum eget. Vivamus sed tincidunt lectus, sit amet luctus turpis. Etiam non venenatis enim. Pellentesque sed condimentum justo. Nulla ut odio massa. Morbi ut augue feugiat, sollicitudin quam ac, congue sapien. Nam et felis tincidunt, dignissim metus sed, sodales diam.
+
+        Sed aliquet auctor aliquet. Aliquam commodo orci ac metus ultricies, et hendrerit lectus aliquam. Sed vitae urna at libero pulvinar scelerisque nec eu risus. Praesent porta odio finibus mattis sollicitudin. Duis tincidunt et arcu ac mollis. In lobortis turpis id ante faucibus, eu aliquam velit viverra. Mauris dolor ex, feugiat vel massa eget, semper malesuada ipsum. Morbi fermentum magna quis pretium molestie. Integer sit amet condimentum est, sit amet tristique mi. Fusce rhoncus magna eu mattis faucibus. Nulla ullamcorper ac mauris ut efficitur.
+
+        Aenean sed efficitur leo. Pellentesque pellentesque, nisi vitae sollicitudin sollicitudin, justo felis convallis eros, rhoncus maximus arcu quam vitae massa. Quisque porta tempus venenatis. Quisque pulvinar, elit ut dignissim venenatis, turpis arcu eleifend ligula, non pretium mauris odio in justo. Fusce eleifend varius pharetra. Nunc quis arcu ac ante facilisis semper vitae ut nunc. Etiam nisi eros, viverra ac sapien ut, lacinia lobortis tellus. In sollicitudin at odio sed pulvinar. Cras maximus purus a ex convallis ultrices. Duis suscipit arcu dictum dolor rhoncus, vel hendrerit dui faucibus. Morbi magna mi, facilisis ut congue eget, ultricies in tortor. Nunc est ipsum, commodo vel lectus et, gravida vehicula felis. Praesent congue porta sagittis. Morbi tristique euismod risus eget molestie. Nulla facilisi. Sed vitae lacinia lacus.
+    </div>
+    <form class="form-inline" action="{{ path_for('subscribe') }}" method="post">
+        <div class="form-group mb-2 price_abo">
+            Prix de l'abonnement : {{ current_trimestre.tarifabo }}€
+        </div>
+        <div  class="form-group mb-2 price_abo d-none">
+            Prix de l'abonnement : {{ next_trimestre.tarifabo }}€
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="sub-start"></label>
+            <select class="form-control" name="sub-start" id="sub-start">
+                <option selected value="{{current_trimestre.id_trimestre}}">A partir de ce trimestre</option>
+                <option value="{{next_trimestre.id_trimestre}}">A partir du trimestre prochaine</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">S'abonner</button>
+    </form>
+{% endblock %}
+

@@ -30,11 +30,25 @@
                 </div>
             {% endif %}
         </div>
-        {% if current_basket is not empty %}
-            <div class="p-2 text-center">
-                <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}" role="button"> Annuler mon panier </a>
-            </div>
+        {% if user_role == "Non Abonné" or user_role == "postgres" %}
+            {% if current_basket is not empty %}
+                <div class="d-flex" id="subscribe">
+                    <div class="font-weight-bold" id="textsubscribe">
+                        Abonnez vous pour bénéficiez de nos services
+                    </div>
+                    <div class="p-2 text-center">
+                        <a class="btn btn-primary" href="{{ path_for("subscription_form") }}" role="button">S'abonner</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% elseif user_role == "Abonné" %}
+            {% if current_basket is not empty %}
+                <div class="p-2 text-center">
+                    <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}" role="button"> Annuler mon panier </a>
+                </div>
+            {% endif %}
         {% endif %}
+
     </div>
 
     <div id="week_basket" class="shadow p-3 mb-5">

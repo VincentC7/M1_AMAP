@@ -1,8 +1,8 @@
 --verifier les todo
 
 --Création des utilisateurs
-create user admin_amap with encrypted password 'admin_amap'; -- admin_amap
-create user producteur with encrypted password 'producteur'; -- producteur
+create user user_admin_amap with encrypted password 'admin_amap'; -- admin_amap
+create user user_producteur with encrypted password 'producteur'; -- producteur
 create user user_visiteur with encrypted password 'user_visiteur'; -- visiteur
 create user user_abonne with encrypted password 'user_abonne'; -- utilisateur
 create user user_non_abonne with encrypted password 'user_non_abonne'; -- abonne
@@ -13,6 +13,13 @@ create group abonne;
 create group admin_amap;
 create group producteur;
 create group visiteur;
+
+--affectation des roles aux utilisateurs
+grant utlisateur to user_non_abonne
+grant abonne to user_abonne
+grant admin_amap to user_admin_amap
+grant producteur to user_producteur
+grant visiteur to user_visiteur
 
 --abonne a les droits de utilisateur
 grant utilisateur to abonne;

@@ -15,7 +15,7 @@ create group producteur;
 create group visiteur;
 
 --affectation des roles aux utilisateurs
-grant utlisateur to user_non_abonne;
+grant utilisateur to user_non_abonne;
 grant abonne to user_abonne;
 grant admin_amap to user_admin_amap;
 grant producteur to user_producteur;
@@ -51,11 +51,11 @@ grant update (nom, prenom, tel, motdepasse) on table utilisateur to utilisateur;
 grant update (etat) on table abonnement to utilisateur;
 
 --abonne
-grant insert on refus to abonne
+grant insert on refus to abonne;
 
 --visiteur
-grant insert on utilisateur to visiteur
+grant insert on utilisateur to visiteur;
 
-grant select on trimestre to visiteur
-grant select on panier to visiteur
-grant select on produit to visiteur
+grant select on trimestre to visiteur;
+grant select on panier to visiteur;
+grant select on produit to visiteur;

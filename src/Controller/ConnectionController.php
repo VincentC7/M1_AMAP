@@ -22,7 +22,7 @@ class ConnectionController extends Controller {
         $erreurs = [];
 
         //Verification de l'existance de l'utilisateur
-        $stmt = $pdo->prepare("SELECT identifiant,motdepasse FROM utilisateur WHERE identifiant = ? ");
+        $stmt = $pdo->prepare("SELECT identifiant,motdepasse,role,id_utilisateur FROM utilisateur WHERE identifiant = ? ");
         $stmt->execute([$params['email']]);
         $user = $stmt->fetch();
 
@@ -30,12 +30,14 @@ class ConnectionController extends Controller {
             $this->afficher_message('Identifiant ou mot de passe incorrect', 'echec');
             return $this->redirect($response,'sign_in_page');
         }
-        $this->login($user['id_utilisateur'], $user['role']);
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['user_id'] = $user['id_utilisateur'];
         return $this->redirect($response,'home');
     }
 
     public function sign_out(RequestInterface $request, ResponseInterface $response){
-        $this->logout();
+        $_SESSION['role'] = "Visiteur";
+        $_SESSION['user_id'] =  -1;
         return $this->redirect($response,'home');
     }
 

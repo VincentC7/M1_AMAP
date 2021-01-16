@@ -25,13 +25,15 @@
                 {% endif %}
             </ul>
         </div>
-
+        <span class="navbar-text">
+            role : {{ user_role }}
+        </span>
         {% if user_role == "Visiteur" or user_role == "postgres" %}
             <form class="form-inline" action="{{ path_for('sign_in') }}">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Connexion</button>
             </form>
         {% else %}
-            <form class="form-inline" action="{{ path_for('sign_in') }}">
+            <form class="form-inline" action="{{ path_for('sign_out') }}">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Déconnection</button>
             </form>
         {% endif %}

@@ -10,10 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class Controller {
 
-    protected $user_id;
-    protected $user_role = "postgres";
     protected $container;
-    protected $pdo;
 
     /**
      * Controller constructor.
@@ -29,7 +26,8 @@ class Controller {
      * @param $args
      */
     public function render(ResponseInterface $response, $file, $args = []){
-        $args['user_role'] = $this->user_role;
+        $args['user_role'] = $_SESSION['role'];
+        $args['user_id'] = $_SESSION['user_id'];
         $this->container->view->render($response,$file, $args);
     }
 
@@ -45,38 +43,15 @@ class Controller {
     }
 
     public function get_PDO() : PDO {
-        if(!isset($this->pdo)){
-            self::change_db_connection();
-        }
-        return $this->pdo;
-    }
-
-    private function change_db_connection(){
         $db_info = parse_ini_file( '../conf/conf.ini', true);
-        try{
-            $user = $db_info[$this->user_role]['username'];
-            $password = $db_info[$this->user_role]['password'];
-            $this->pdo = new PDO($db_info['driver'].":host=" . $db_info['host'] . ";dbname=" . $db_info['database'] ,$user,$password);
+        try {
+            $role = $_SESSION['role'];
+            $user = $db_info[$role]['username'];
+            $password = $db_info[$role]['password'];
+            return new PDO($db_info['driver'].":host=" . $db_info['host'] . ";dbname=" . $db_info['database'] ,$user,$password);
         }catch (PDOException $e){
-            print_r($db_info);
             echo "La connection a la base de données à echoué";
+            return null;
         }
     }
-
-    public function isConnected(){
-        return $this->user_role == "Visiteur";
-    }
-
-    public function login($user_id,$role){
-        $this->user_id = $user_id;
-        $this->user_role = $role;
-        self::change_db_connection();
-    }
-
-    public function logout(){
-        $this->user_id = -1;
-        $this->user_role = "Visiteur";
-        self::change_db_connection();
-    }
-
 }

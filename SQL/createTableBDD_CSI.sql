@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
     	tel VARCHAR(25) NOT NULL,
 	identifiant VARCHAR(150) NOT NULL,
 	motDePasse VARCHAR(25) NOT NULL,
-	role VARCHAR(25) NOT NULL CHECK(role in ('Guest','User','Administrator', 'Abonné', 'Non abonné', 'Producteur', 'Admin')),
+	role VARCHAR(25) NOT NULL CHECK(role in ('Abonné', 'Non abonné', 'Producteur', 'Admin')),
 	PRIMARY KEY(id_utilisateur)
 );
 

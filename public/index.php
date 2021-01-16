@@ -23,6 +23,14 @@ require(__DIR__ . '/../src/dependances.php');
 
 
 $container = $app->getContainer();
+if (!isset($_SESSION['role'])){
+    $_SESSION['role'] = "postgres";
+}
+
+if (!isset($_SESSION['user_id'])){
+    $_SESSION['user_id'] = -1;
+}
+
 // ==================== middleware ====================
 $app->add(new ErreurMiddleware($container->get('view')->getEnvironment()));
 $app->add(new OldMiddleware($container->get('view')->getEnvironment()));
@@ -36,6 +44,7 @@ $app->get('/', HomeController::class.":index")->setName("home");
 $app->get('/Connexion', ConnectionController::class.":index")->setName("sign_in_page");
 $app->post('/Connexion', ConnectionController::class.":sign_in")->setName("sign_in");
 $app->post('/Inscription', ConnectionController::class.":sign_up")->setName("sign_up");
+$app->get('/Deconnection', ConnectionController::class.":sign_out")->setName("sign_out");
 
 //Stock
 $app->get('/Stock', StockController::class.":index")->setName("stock");

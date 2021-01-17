@@ -43,6 +43,7 @@ grant select on commande to utilisateur;
 grant select on panier to utilisateur;
 grant select on produit to utilisateur;
 grant select on compose to utilisateur;
+grant select on contenucommande to utilisateur;
 
 grant insert on commande to utilisateur;
 grant insert on contenucommande to utilisateur;
@@ -50,6 +51,7 @@ grant insert on abonnement to utilisateur;
 
 grant update (nom, prenom, tel, motdepasse) on table utilisateur to utilisateur;
 grant update (etat) on table abonnement to utilisateur;
+grant update (statut) on table commande to utilisateur;
 
 --abonne
 grant insert on refus to abonne;

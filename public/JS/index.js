@@ -11,4 +11,9 @@ $(document).ready( function () {
         $(this).toggleClass("d-none");
         $(this).parent().next().toggleClass("d-none");
     });
+
+    $("#cancel_sub").click(function () {
+        $(this).toggleClass("d-none");
+        $(this).next().toggleClass("d-none");
+    });
 });

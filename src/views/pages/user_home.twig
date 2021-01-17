@@ -35,7 +35,10 @@
             {% endif %}
             <div class="d-flex">
                 <a class="btn btn-primary mr-2" href="{{ path_for("subscription_form") }}" role="button">Poursuivre mon abonnement</a>
-                <a class="btn btn-danger" href="{{ path_for("subscription_form") }}" role="button">Résiler mon abonnement</a>
+                <button class="btn btn-danger" id="cancel_sub"> Résiler mon abonnement </button>
+                <form action="{{ path_for("cancel_sub") }}" method="post" class="d-none">
+                    <button type="submit" class="btn btn-danger"> Valider la résiliation de mon abonnement</button>
+                </form>
             </div>
 
         {% else %}

@@ -61,9 +61,25 @@ class SubscriptionController extends Controller
 
         if ($resultat) {
             $this->afficher_message('Le rang de l\'utilisateur a bien été mis à jour');
-        }else{
+        } else {
             $this->afficher_message('Erreur : Le rang de l\'utilisateur n\'a pas été mis à jour', 'echec');
         }
         return $this->redirect($response,'queue');
+    }
+
+    public function cancel_sub(RequestInterface $request, ResponseInterface $response){
+        $pdo = $this->get_PDO();
+        $stmt = $pdo->prepare("SELECT id_abonnement from abonnement inner join trimestre t on abonnement.trimestre = t.id_trimestre where t.datedebut <= ? and t.datefin >= ? and utilisateur = ?");
+        $date = date('Y-m-d H:i:s');
+        $stmt->execute([$date,$date,$_SESSION['user_id']]);
+        $sub = $stmt->fetch();
+        $stmt = $pdo->prepare("UPDATE abonnement set etat = 'Résilié' where id_abonnement = ?");
+        $resultat = $stmt->execute([$sub['id_abonnement']]);
+        if ($resultat) {
+            $this->afficher_message('Votre abonnement est bien été résilié');
+        } else {
+            $this->afficher_message('Erreur : echec de la résilisation de votre abonnement', 'echec');
+        }
+        return $this->redirect($response,'user_home');
     }
 }

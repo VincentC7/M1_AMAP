@@ -36,7 +36,7 @@ grant insert on produit to producteur;
 grant insert on panier to producteur;
 
 --utilisateur
-grant select (nom, prenom, tel, identifiant, role) on table utilisateur to utilisateur;
+grant select (nom, prenom, tel, identifiant, role,id_utilisateur) on table utilisateur to utilisateur;
 grant select on abonnement to utilisateur;
 grant select on trimestre to utilisateur;
 grant select on commande to utilisateur;
@@ -55,6 +55,8 @@ grant update (statut) on table commande to utilisateur;
 
 --abonne
 grant insert on refus to abonne;
+GRANT USAGE, SELECT ON SEQUENCE refus_id_refus_seq TO abonne;
+grant select on refus to abonne;
 
 --visiteur
 grant insert on utilisateur to visiteur;

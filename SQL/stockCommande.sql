@@ -7,7 +7,7 @@ BEGIN
 		RAISE notice 'val : %', new;
 		If NEW.statut = 'Validée'
 		THEN
-			SELECT MAX(produit.valeur - contenucommande.valeur) INTO reste
+			SELECT MIN(produit.valeur - contenucommande.valeur) INTO reste
 			FROM Produit, Contenucommande
 			WHERE produit.id_produit = contenucommande.produit;
 			RAISE notice 'val : %', reste;

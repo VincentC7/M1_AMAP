@@ -12,6 +12,7 @@ BEGIN
 				
 				IF reste < 0 THEN
 					new.statut = 'Refusé';
+					RETURN new;
 					RAISE EXCEPTION 'Quantités insuffisantes en stock pour cette commande';
 				END IF;
 			END LOOP;

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Abonnement (
 	datePaiement TIMESTAMP,
 	utilisateur INTEGER,
 	trimestre INTEGER,
-	rang INTEGER NOT NULL,
+	rang INTEGER,
 	PRIMARY KEY(id_abonnement),
 	FOREIGN KEY(utilisateur) REFERENCES Utilisateur(id_utilisateur),
 	FOREIGN KEY(trimestre) REFERENCES Trimestre(id_trimestre)

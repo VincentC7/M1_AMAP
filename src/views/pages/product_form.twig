@@ -2,7 +2,11 @@
 
 {% block content %}
     <h1 class="text-center">
-        Edition d'un panier
+        {% if product.id_produit %}
+            Edition d'un produit
+        {% else %}
+            Ajouter un nouveau produit au stock
+        {% endif %}
     </h1>
     <hr>
     <div class="container">

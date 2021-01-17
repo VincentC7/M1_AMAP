@@ -1,16 +1,42 @@
 {% extends "pages/layout.twig" %}
 
+{% block css %}
+    <link href="{{ base_url() }}/CSS/order.css" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
     <h1 class="text-center"> Mes commandes occassionnelles </h1>
-
-    {% for order in orders %}
-        <div class="mb-3 p-2 item-card d-flex">
-            <div class="ml-2 align-self-center d-flex">
-                Commande N° {{ order.id_commande }}
+    <div class="d-flex">
+        {% for order in orders %}
+            <div class="order-card mr-3 position-relative">
+                <div class="order-title p-2 {% if order.statut == 'Validée'%} order-card-valide {% elseif order.statut == 'Annulée' or order.statut == 'Refusée' %} order-card-refused {% endif %}">
+                    Commande du {{ order.datedemande|date("m/d/Y") }}
+                </div>
+                <div class="order-products mt-1">
+                    {% for product in order.products %}
+                        <div class="d-flex pl-3 mb-1 border-bottom ">
+                            <div class="w-50">
+                                {{ product.nomproduit }}
+                            </div>
+                            <div>
+                                {{ product.valeur }} {{ product.unite }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="font-weight-bold position-absolute fixed-bottom d-flex p-2">
+                    <div class="fit-content m-auto">
+                        Total : {{ order.prixtotal }}€
+                    </div>
+                    {% if order.statut == "En attente de validation" %}
+                        <form class="form-inline" method="post" action="{{ path_for('accept_order', {id:order.id_commande}) }}">
+                            <button type="submit" class="btn btn-primary">Valider commande</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block js %}

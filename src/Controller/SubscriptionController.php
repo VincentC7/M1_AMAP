@@ -27,7 +27,7 @@ class SubscriptionController extends Controller
         $pdo =$this->get_PDO();
         $stmt = $pdo->prepare("INSERT INTO abonnement (datedemandeabo, etat, utilisateur, trimestre) VALUES (?,?,?,?)");
         $params = $request->getParams();
-        $user = 4; // $_SESSION['user_id']
+        $user = $_SESSION['user_id'];
         $resultat = $stmt->execute([date('Y-m-d H:i:s'),'En cours', $user, $params['sub-start']]);
         if ($resultat) {
             $this->afficher_message('Votre demande d\'abonnement a été prise en compte');

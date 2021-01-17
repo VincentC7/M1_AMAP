@@ -35,6 +35,15 @@ class HomeController extends Controller {
         $hour = intval(date('G'));
         $occassional_msg = "Pas de produits disponibles";
 
+        /**
+         *  if (($day == $this->occasional_order_start_day && $hour > $this->occasional_order_start_hour || $day == $this->occasional_order_end_day  && $hour < $this->occasional_order_end_hour )) {
+        $stmt = $pdo->prepare("select valeur,nomproduit,unite from produit WHERE valeur > 0;");
+        $stmt->execute();
+        $occassional = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+        $occassional_msg = "Les commandes occassionnelles sont actuellements fermés";
+        }
+         */
         $stmt = $pdo->prepare("select * from refus where utilisateur = ? and panier = ?");
         $stmt->execute([5,$basket['id_panier']]);
         $has_refus = $stmt->fetch();

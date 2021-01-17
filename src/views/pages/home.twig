@@ -30,7 +30,7 @@
                 </div>
             {% endif %}
         </div>
-        {% if user_role == "Non Abonné" %}
+        {% if user_role == "Non abonné" %}
             {% if current_basket is not empty %}
                 <div class="d-flex" id="subscribe">
                     <div class="font-weight-bold" id="textsubscribe">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             {% endif %}
-        {% elseif user_role == "Abonné" or user_role == "postgres" %}
+        {% elseif user_role == "Abonné" %}
             {% if current_basket is not empty and has_refus is empty %}
                 <div class="text-center">
                     <button class="btn btn-danger" id="cancel_basket"> Annuler mon panier </button>
@@ -51,7 +51,6 @@
                 </div>
             {% endif %}
         {% endif %}
-
     </div>
 
     <div id="week_basket" class="shadow p-3 mb-5">

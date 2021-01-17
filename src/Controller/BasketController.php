@@ -122,7 +122,7 @@ class BasketController extends Controller
         $id_basket = $args["id"];
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("INSERT INTO refus (utilisateur, panier) VALUES (?,?);");
-        $user = 4; //$_SESSION['user_id'];
+        $user = $_SESSION['user_id'];
         $resultat = $stmt->execute([$user,$id_basket]);
         if ($resultat) {
             $this->afficher_message('Le panier à bien été refusé');

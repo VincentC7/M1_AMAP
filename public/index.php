@@ -11,7 +11,7 @@ use M1_CSI_Appli_AMAP\Middleware\OldMiddleware;
 use Slim\App;
 
 require __DIR__ . '/../vendor/autoload.php';
-
+date_default_timezone_set('Europe/Paris');
 
 session_start();
 $app = new App([
@@ -25,7 +25,7 @@ require(__DIR__ . '/../src/dependances.php');
 
 $container = $app->getContainer();
 if (!isset($_SESSION['role'])){
-    $_SESSION['role'] = "postgres";
+    $_SESSION['role'] = "Visiteur";
 }
 
 if (!isset($_SESSION['user_id'])){
@@ -68,9 +68,7 @@ $app->get('/Panier/{id}/Cancel', BasketController::class.":cancel")->setName("ca
 $app->get('/CommandeOccassionnelle', OrderControle::class.":order_form")->setName("new_order");
 $app->post('/CommandeOccassionnelle', OrderControle::class.":order_save")->setName("new_order_save");
 $app->get('/CommandeOccassionnelle/Gestion', OrderControle::class.":index")->setName("order_management");
-$app->get('/CommandeOccassionnelle/{order_id}/Accepter', OrderControle::class.":accept_order")->setName("accept_order");
-$app->get('/CommandeOccassionnelle/{order_id}/Valider', OrderControle::class.":validate_order")->setName("validate_order");
-$app->get('/CommandeOccassionnelle/{order_id}/Refuser', OrderControle::class.":refuse_order")->setName("refuse_order");
+$app->post('/CommandeOccassionnelle/{id}/Accept', OrderControle::class.":accept")->setName("accept_order");
 
 //Sub
 $app->get('/Abonnement/Nouveau', SubscriptionController::class.":subscription_form")->setName("subscription_form");

@@ -24,6 +24,14 @@ class UserController extends Controller
             $refus = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        $stmt = $pdo->prepare("SELECT id_trimestre,tarifabo from trimestre where datedebut <= ? and datefin >= ?");
+        $date = date('Y-m-d H:i:s');
+        $stmt->execute([$date,$date]);
+        $current_tri = $stmt->fetch();
+        $stmt = $pdo->prepare("Select id_abonnement from abonnement where trimestre = ?");
+        $stmt->execute([$current_tri["id_trimestre"]+1]);
+        $is_sub_up = $stmt->fetch();
+
         $stmt = $pdo->prepare("SELECT * FROM commande where utilisateur = ? order by datedemande");
         $stmt->execute([$_SESSION['user_id']]);
         $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -35,7 +43,7 @@ class UserController extends Controller
             $orders[$i]['products'] = $products;
             $i++;
         }
-        $this->render($response, 'pages/user_home.twig', ['orders' => $orders,'user'=>$user,'refus'=>$refus]);
+        $this->render($response, 'pages/user_home.twig', ['orders' => $orders,'user'=>$user,'refus'=>$refus, 'is_sub_up' => isset($is_sub_up['id_abonnement']), 'tarif'=>$current_tri['tarifabo']]);
     }
 
 }

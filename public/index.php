@@ -78,6 +78,7 @@ $app->get('/MonCompte/Gestion', UserController::class.":index")->setName("user_h
 $app->get('/Abonnement/Nouveau', SubscriptionController::class.":subscription_form")->setName("subscription_form");
 $app->post('/Abonnement/Nouveau', SubscriptionController::class.":new")->setName("subscribe");
 $app->post('/Abonnement/Cancel', SubscriptionController::class.":cancel_sub")->setName("cancel_sub");
+$app->post('/Abonnement/Renouveler', SubscriptionController::class.":update")->setName("update_sub");
 //Queue
 $app->get('/FileAttente', SubscriptionController::class.":index")->setName("queue");
 $app->get('/FileAttente/{id}', SubscriptionController::class.":change_rank")->setName("queue_maj");

@@ -35,7 +35,7 @@ class SubscriptionController extends Controller
         }else{
             $this->afficher_message('Erreur : Votre demande d\'abonnement n\'a été prise en compte ', 'echec');
         }
-        return $this->redirect($response,'home');
+        return $this->redirect($response,'user_home');
     }
 
     public function index(RequestInterface $request, ResponseInterface $response) {
@@ -81,5 +81,24 @@ class SubscriptionController extends Controller
             $this->afficher_message('Erreur : echec de la résilisation de votre abonnement', 'echec');
         }
         return $this->redirect($response,'user_home');
+    }
+
+    public function update(RequestInterface $request, ResponseInterface $response){
+        $pdo = $this->get_PDO();
+        $stmt = $pdo->prepare("SELECT id_trimestre from trimestre where datedebut <= ? and datefin >= ?");
+        $date = date('Y-m-d H:i:s');
+        $stmt->execute([$date,$date]);
+        $current_tri = $stmt->fetch();
+
+        $stmt = $pdo->prepare("INSERT INTO abonnement (datedemandeabo, etat, utilisateur,datepaiement, trimestre) VALUES (?,?,?,?,?)");
+        $resultat = $stmt->execute([$date,'En cours',  $_SESSION['user_id'],$date, $current_tri['id_trimestre']+1]);
+
+        if ($resultat) {
+            $this->afficher_message('Votre abonnement a bien été renouvelé');
+        }else{
+            $this->afficher_message('Erreur : votre abonnement n\'a pas été renouvelé', 'echec');
+        }
+        return $this->redirect($response,'user_home');
+
     }
 }

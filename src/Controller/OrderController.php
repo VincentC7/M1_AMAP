@@ -8,7 +8,7 @@ use PDO;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class OrderControle extends Controller {
+class OrderController extends Controller {
 
     private static $CREATING_ORDER = "En cours de création";
     private static $PENDING_ORDER = "En attente de traitement";

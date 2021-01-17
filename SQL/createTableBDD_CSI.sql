@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS Parametre (
 	delaiRefusPanier FLOAT(10),
 	delaiMajPanier TIMESTAMP,
 	delaiCommande FLOAT(10),
+    default_tarif_abo FLOAT(10),
 	delaiRefusCommande FLOAT(10),
 	PRIMARY KEY(nbAbonnementMax, delaiRefusPanier, delaiMajPanier, delaiCommande, delaiRefusCommande)
 );

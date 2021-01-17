@@ -1,0 +1,25 @@
+{% extends "pages/layout.twig" %}
+
+{% block content %}
+    <div class="d-flex mb-3">
+        <h1>Paramètres</h1>
+    </div>
+    <form method="post" action="{{ path_for('settings_save') }}">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="param_nb_sub">Nombre d'abonnement maximum </label>
+                <input type="number" class="form-control" id="param_nb_sub" name="param_nb_sub" value="{{ params.nbabonnementmax }}" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="param_rejection_deadlines">Delai avant le refus d'un panier (en secondes) </label>
+                <input type="number" class="form-control" id="param_rejection_deadlines" name="param_rejection_deadlines"  value="{{ params.delairefuscommande }}" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="param_sub_cost">Tarif d'un abonnement par défaut (en €)</label>
+                <input type="number" class="form-control" id="param_sub_cost" name="param_sub_cost" value="{{ params.default_tarif_abo }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        </div>
+    </form>
+{% endblock %}
+

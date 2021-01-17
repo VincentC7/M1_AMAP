@@ -3,7 +3,8 @@
 use M1_CSI_Appli_AMAP\Controller\BasketController;
 use M1_CSI_Appli_AMAP\Controller\ConnectionController;
 use M1_CSI_Appli_AMAP\Controller\HomeController;
-use M1_CSI_Appli_AMAP\Controller\OrderControle;
+use M1_CSI_Appli_AMAP\Controller\OrderController;
+use M1_CSI_Appli_AMAP\Controller\SettingsController;
 use M1_CSI_Appli_AMAP\Controller\StockController;
 use M1_CSI_Appli_AMAP\Controller\SubscriptionController;
 use M1_CSI_Appli_AMAP\Controller\UserController;
@@ -66,9 +67,9 @@ $app->post('/Panier/{id}/Vider', BasketController::class.":clear")->setName("cle
 $app->get('/Panier/{id}/Cancel', BasketController::class.":cancel")->setName("cancel_basket");
 
 //Commandes occassionnelles
-$app->get('/CommandeOccassionnelle', OrderControle::class.":order_form")->setName("new_order");
-$app->post('/CommandeOccassionnelle', OrderControle::class.":order_save")->setName("new_order_save");
-$app->post('/MonCompte/{id}/Accept', OrderControle::class.":accept")->setName("accept_order");
+$app->get('/CommandeOccassionnelle', OrderController::class.":order_form")->setName("new_order");
+$app->post('/CommandeOccassionnelle', OrderController::class.":order_save")->setName("new_order_save");
+$app->post('/MonCompte/{id}/Accept', OrderController::class.":accept")->setName("accept_order");
 
 //User home
 $app->get('/MonCompte/Gestion', UserController::class.":index")->setName("user_home");
@@ -76,5 +77,10 @@ $app->get('/MonCompte/Gestion', UserController::class.":index")->setName("user_h
 //Sub
 $app->get('/Abonnement/Nouveau', SubscriptionController::class.":subscription_form")->setName("subscription_form");
 $app->post('/Abonnement/Nouveau', SubscriptionController::class.":new")->setName("subscribe");
+
+//Settings
+$app->get('/Application/Parametres', SettingsController::class.":index")->setName("settings");
+$app->post('/Application/Parametres', SettingsController::class.":update")->setName("settings_save");
+
 
 $app->run();

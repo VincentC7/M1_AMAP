@@ -4,23 +4,15 @@ IF ((SELECT nbAbonnementMax FROM Parametre)
 	-
     (SELECT COUNT(*) FROM Abonnement WHERE etat = 'Validé' AND trimestre = trimestre)) <= 0
 	THEN
-		UPDATE Abonnement set etat = 'Sur liste d’attente'
-		WHERE id_abonnement = (SELECT MAX(id_abonnement) FROM Abonnement);
+     		new.etat := 'Sur liste d’attente';
 	ELSE
-		UPDATE Abonnement set etat = 'Validé'
-		WHERE id_abonnement = (SELECT MAX(id_abonnement) FROM Abonnement);
-		UPDATE Utilisateur set role ='Abonné'
-		WHERE id_utilisateur = (Select utilisateur
-					FROM abonnement
-					WHERE id_abonnement =(SELECT MAX(id_abonnement)
-					      		      FROM Abonnement));
-		UPDATE Abonnement set datedebutabo = CURRENT_DATE
-		WHERE id_abonnement = (SELECT MAX(id_abonnement) FROM Abonnement);
-		UPDATE Abonnement set datepaiement = CURRENT_DATE
-		WHERE id_abonnement = (SELECT MAX(id_abonnement) FROM Abonnement);
+     		new.etat := 'Validé';
+		UPDATE Utilisateur set role ='Abonné' WHERE id_utilisateur = new.utilisateur;
+		new.datedebutabo := CURRENT_DATE;
+		new.datepaiement := CURRENT_DATE;
 	END IF;
 	RETURN NEW;
  END;
 $verifPlaceDispo$ language plpgsql;
 
-create trigger verifPlaceDispo after insert on Abonnement execute procedure verifPlaceDispo();
+create trigger verifPlaceDispo before insert on abonnement FOR EACH ROW execute procedure verifPlaceDispo();

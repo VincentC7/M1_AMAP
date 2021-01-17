@@ -7,8 +7,6 @@ BEGIN
 		THEN
 			FOR contenu IN SELECT * from contenucommande where commande = new.id_commande
 			LOOP
-				reste := 0;
-				
 				SELECT (produit.valeur - contenu.valeur) INTO reste
 				FROM produit WHERE produit.id_produit = contenu.produit;
 				
@@ -19,7 +17,6 @@ BEGIN
 			END LOOP;
 			new.datereponse := CURRENT_DATE;
 			new.statut := 'En attente de validation';
-			raise notice 'lama: %', new;
 		END IF;
 		RETURN new;
 END;

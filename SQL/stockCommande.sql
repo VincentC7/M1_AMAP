@@ -10,6 +10,7 @@ BEGIN
 			SELECT MIN(produit.valeur - contenucommande.valeur) INTO reste
 			FROM Produit, Contenucommande
 			WHERE produit.id_produit = contenucommande.produit;
+			AND contenucommande.commande = new.id_commande
 			RAISE notice 'val : %', reste;
 			IF reste >= 0
 			THEN

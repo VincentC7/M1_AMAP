@@ -42,6 +42,7 @@ grant select on trimestre to utilisateur;
 grant select on commande to utilisateur;
 grant select on panier to utilisateur;
 grant select on produit to utilisateur;
+grant select on compose to utilisateur;
 
 grant insert on commande to utilisateur;
 grant insert on contenucommande to utilisateur;
@@ -59,3 +60,5 @@ grant insert on utilisateur to visiteur;
 grant select on trimestre to visiteur;
 grant select on panier to visiteur;
 grant select on produit to visiteur;
+grant select on utilisateur to visiteur;
+grant select on compose to visiteur;

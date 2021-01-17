@@ -11,9 +11,8 @@ BEGIN
 				FROM produit WHERE produit.id_produit = contenu.produit;
 				
 				IF reste < 0 THEN
-					new.statut = 'Refusé';
+					new.statut = 'Refusée';
 					RETURN new;
-					RAISE EXCEPTION 'Quantités insuffisantes en stock pour cette commande';
 				END IF;
 			END LOOP;
 			new.datereponse := CURRENT_DATE;

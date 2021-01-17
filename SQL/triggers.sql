@@ -14,11 +14,13 @@ IF ((SELECT nbAbonnementMax FROM Parametre)
 					FROM abonnement
 					WHERE id_abonnement =(SELECT MAX(id_abonnement)
 					      		      FROM Abonnement));
+		UPDATE Abonnement set datedebutabo = CURRENT_DATE
+		WHERE id_abonnement = (SELECT MAX(id_abonnement) FROM Abonnement);
+		UPDATE Abonnement set datepaiement = CURRENT_DATE
+		WHERE id_abonnement = (SELECT MAX(id_abonnement) FROM Abonnement);
 	END IF;
 	RETURN NEW;
  END;
 $verifPlaceDispo$ language plpgsql;
 
 create trigger verifPlaceDispo after insert on Abonnement execute procedure verifPlaceDispo();
-
-

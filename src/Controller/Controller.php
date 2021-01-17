@@ -35,7 +35,7 @@ class Controller {
         return $response->withStatus(302)->withHeader('Location', $this->container->router->pathFor($nom, $args));
     }
 
-    public function afficher_message($message, $type = 'valide'){
+    public function afficher_message($message, $type = 'valide') {
         if (!isset($_SESSION['message'])) {
             $_SESSION['message'] = [];
         }

@@ -4,6 +4,7 @@
 namespace M1_CSI_Appli_AMAP\Controller;
 
 
+use PDO;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -35,5 +36,34 @@ class SubscriptionController extends Controller
             $this->afficher_message('Erreur : Votre demande d\'abonnement n\'a été prise en compte ', 'echec');
         }
         return $this->redirect($response,'home');
+    }
+
+    public function index(RequestInterface $request, ResponseInterface $response) {
+        $pdo =$this->get_PDO();
+        $stmt = $pdo->prepare("SELECT nom,prenom, id_abonnement
+                                            from abonnement inner join trimestre on abonnement.trimestre = trimestre.id_trimestre 
+                                                inner join utilisateur u on abonnement.utilisateur = u.id_utilisateur 
+                                        where abonnement.etat = 'Sur liste d’attente' and datedebut < ? and datefin > ? order by rang");
+        $date = date('Y-m-d H:i:s');
+        $stmt->execute([$date,$date]);
+        $queue = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->render($response, 'pages/queue.twig',['queue'=>$queue]);
+    }
+
+    public function change_rank(RequestInterface $request, ResponseInterface $response,$args){
+        $pdo =$this->get_PDO();
+        $stmt = $pdo->prepare("SELECT min(rang) as rank from abonnement");
+        $stmt->execute();
+        $min_rank = $stmt->fetch();
+
+        $stmt = $pdo->prepare("UPDATE abonnement set rang = ? where id_abonnement = ?");
+        $resultat = $stmt->execute([$min_rank['rank'] -1 , $args['id']]);
+
+        if ($resultat) {
+            $this->afficher_message('Le rang de l\'utilisateur a bien été mis à jour');
+        }else{
+            $this->afficher_message('Erreur : Le rang de l\'utilisateur n\'a pas été mis à jour', 'echec');
+        }
+        return $this->redirect($response,'queue');
     }
 }

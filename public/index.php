@@ -69,7 +69,7 @@ $app->get('/Panier/{id}/Cancel', BasketController::class.":cancel")->setName("ca
 //Commandes occassionnelles
 $app->get('/CommandeOccassionnelle', OrderController::class.":order_form")->setName("new_order");
 $app->post('/CommandeOccassionnelle', OrderController::class.":order_save")->setName("new_order_save");
-$app->post('/MonCompte/{id}/Accept', OrderController::class.":accept")->setName("accept_order");
+$app->post('/CommandeOccassionnelle/{id}/Accept', OrderController::class.":accept")->setName("accept_order");
 
 //User home
 $app->get('/MonCompte/Gestion', UserController::class.":index")->setName("user_home");
@@ -77,6 +77,10 @@ $app->get('/MonCompte/Gestion', UserController::class.":index")->setName("user_h
 //Sub
 $app->get('/Abonnement/Nouveau', SubscriptionController::class.":subscription_form")->setName("subscription_form");
 $app->post('/Abonnement/Nouveau', SubscriptionController::class.":new")->setName("subscribe");
+//Queue
+$app->get('/FileAttente', SubscriptionController::class.":index")->setName("queue");
+$app->get('/FileAttente/{id}', SubscriptionController::class.":change_rank")->setName("queue_maj");
+
 
 //Settings
 $app->get('/Application/Parametres', SettingsController::class.":index")->setName("settings");

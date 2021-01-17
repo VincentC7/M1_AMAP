@@ -1,0 +1,21 @@
+{% extends "pages/layout.twig" %}
+
+{% block content %}
+    <h1 class="text-center">
+        File d'attente des abonnements
+    </h1>
+
+    {% for user in queue %}
+        <div class="mb-3 p-2 item-card d-flex">
+            <div class="ml-2 align-self-center d-flex">
+                {{ user.nom }} {{user.prenom}}
+            </div>
+            <div class="ml-auto p-2 align-self-center position-relative">
+                <a href="{{ path_for("queue_maj", {id: user.id_abonnement}) }}" class="btn-icon">
+                    <img class="btn-img" src="{{ base_url() }}/images/up-arrow.png" alt="up">
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

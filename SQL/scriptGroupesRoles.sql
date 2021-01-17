@@ -28,7 +28,7 @@ grant utilisateur to producteur;
 --admin_amap
 grant select on all tables in SCHEMA public to admin_amap;
 grant update (tarifabo) on table trimestre to admin_amap;
-grant update (etat) on table abonnement to admin_amap;
+grant update (etat,rang) on table abonnement to admin_amap;
 grant update on parametre to admin_amap;
 
 --producteur
@@ -50,8 +50,9 @@ GRANT USAGE, SELECT ON SEQUENCE commande_id_commande_seq TO utilisateur;
 grant insert on contenucommande to utilisateur;
 GRANT USAGE, SELECT ON SEQUENCE contenucommande_id_contenu_seq TO utilisateur;
 grant insert on abonnement to utilisateur;
+GRANT USAGE, SELECT ON SEQUENCE abonnement_id_abonnement_seq TO utilisateur;
 
-grant update (nom, prenom, tel, motdepasse) on table utilisateur to utilisateur;
+grant update (nom, prenom, tel, motdepasse,role) on table utilisateur to utilisateur;
 grant update (etat) on table abonnement to utilisateur;
 grant update (statut,prixtotal) on table commande to utilisateur;
 
@@ -62,6 +63,7 @@ grant select on refus to abonne;
 
 --visiteur
 grant insert on utilisateur to visiteur;
+GRANT USAGE, SELECT ON SEQUENCE utilisateur_id_utilisateur_seq TO visiteur;
 
 grant select on trimestre to visiteur;
 grant select on panier to visiteur;

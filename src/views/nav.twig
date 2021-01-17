@@ -28,6 +28,11 @@
                     </li>
                 {% endif %}
 
+                {% if user_role == "Admin" or user_role == "postgres" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path_for('queue') }}">Abonnements</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         {% if user_role == "Visiteur" or user_role == "postgres" %}

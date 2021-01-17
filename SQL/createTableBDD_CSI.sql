@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Abonnement (
 	id_abonnement SERIAL,
 	dateDemandeAbo TIMESTAMP NOT NULL,
  	dateDebutAbo TIMESTAMP,
-	etat VARCHAR(25) NOT NULL CHECK(etat in ('En cours', 'Validé', 'Sur liste d’attente', 'En attente de paiement', 'Annulé', 'Résilié')),
+	etat VARCHAR(25) NOT NULL CHECK(etat in ('En cours', 'Validé', 'Sur liste d’attente', 'En attente de paiement', 'Annulé', 'Résilié', 'En cours de création')),
 	datePaiement TIMESTAMP,
 	utilisateur INTEGER,
 	trimestre INTEGER,

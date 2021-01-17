@@ -127,7 +127,7 @@ class BasketController extends Controller
         if ($resultat) {
             $this->afficher_message('Le panier à bien été refusé');
         } else {
-            $this->afficher_message('Erreur : Un problème est survenue lors du refus du panier veuillez réessayer', 'echec');
+            $this->afficher_message('Erreur : Un problème est survenue lors du refus du panier veuillez réessayer'.$id_basket, 'echec');
         }
         return $this->redirect($response,'home');
     }

@@ -139,6 +139,13 @@ a {
 
 .fit-content{
     width: fit-content;
+    height: fit-content;
+}
+
+.user-card{
+    background-color: #e7e9eb;
+    border-radius: 5px;
+
 }
 
 

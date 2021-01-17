@@ -6,6 +6,7 @@ use M1_CSI_Appli_AMAP\Controller\HomeController;
 use M1_CSI_Appli_AMAP\Controller\OrderControle;
 use M1_CSI_Appli_AMAP\Controller\StockController;
 use M1_CSI_Appli_AMAP\Controller\SubscriptionController;
+use M1_CSI_Appli_AMAP\Controller\UserController;
 use M1_CSI_Appli_AMAP\Middleware\ErreurMiddleware;
 use M1_CSI_Appli_AMAP\Middleware\OldMiddleware;
 use Slim\App;
@@ -67,8 +68,10 @@ $app->get('/Panier/{id}/Cancel', BasketController::class.":cancel")->setName("ca
 //Commandes occassionnelles
 $app->get('/CommandeOccassionnelle', OrderControle::class.":order_form")->setName("new_order");
 $app->post('/CommandeOccassionnelle', OrderControle::class.":order_save")->setName("new_order_save");
-$app->get('/CommandeOccassionnelle/Gestion', OrderControle::class.":index")->setName("order_management");
-$app->post('/CommandeOccassionnelle/{id}/Accept', OrderControle::class.":accept")->setName("accept_order");
+$app->post('/MonCompte/{id}/Accept', OrderControle::class.":accept")->setName("accept_order");
+
+//User home
+$app->get('/MonCompte/Gestion', UserController::class.":index")->setName("user_home");
 
 //Sub
 $app->get('/Abonnement/Nouveau', SubscriptionController::class.":subscription_form")->setName("subscription_form");

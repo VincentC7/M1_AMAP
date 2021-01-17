@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 class OrderControle extends Controller {
 
     private static $CREATING_ORDER = "En cours de création";
-    private static $PENDING_ORDER = "En attent de traitement";
+    private static $PENDING_ORDER = "En attente de traitement";
     private static $WAITING_VALIDATION_ORDER = "En attente de validation";
     private static $REFUSED_ORDER = "Refusée";
     private static $CANCELED_ORDER = "Annulée";
@@ -50,22 +50,6 @@ class OrderControle extends Controller {
         return $this->redirect($response,'home');
     }
 
-    public function index(RequestInterface $request, ResponseInterface $response) {
-        $pdo = $this->get_PDO();
-        $stmt = $pdo->prepare("SELECT * FROM commande where utilisateur = ? order by datedemande");
-        $stmt->execute([$_SESSION['user_id']]);
-        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $i = 0;
-        foreach ($orders as $order) {
-            $stmt2 = $pdo->prepare("SELECT nomproduit, c.valeur, unite FROM contenucommande as c inner join produit as p on p.id_produit = c.produit where commande = ?");
-            $stmt2->execute([$order['id_commande']]);
-            $products = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-            $orders[$i]['products'] = $products;
-            $i++;
-        }
-        $this->render($response, 'pages/order_management.twig', ['orders' => $orders]);
-    }
-
     public function accept(RequestInterface $request, ResponseInterface $response,$args) {
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("SELECT datereponse FROM commande where id_commande = ?;");
@@ -88,7 +72,7 @@ class OrderControle extends Controller {
             $stmt = $pdo->prepare("UPDATE commande set statut = ? where id_commande = ?;");
             $stmt->execute([self::$VALIDATED_ORDER,$args['id']]);
         }
-        return $this->redirect($response,'order_management');
+        return $this->redirect($response,'user_home');
     }
 
 }

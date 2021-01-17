@@ -20,15 +20,12 @@
 
                 {% if user_role == "Non abonné" or user_role == "Abonné" or user_role == "postgres" %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path_for('order_management') }}">Mon compte</a>
+                        <a class="nav-link" href="{{ path_for('user_home') }}">Mon compte</a>
                     </li>
                 {% endif %}
 
             </ul>
         </div>
-        <span class="navbar-text">
-            role : {{ user_role }}
-        </span>
         {% if user_role == "Visiteur" or user_role == "postgres" %}
             <form class="form-inline" action="{{ path_for('sign_in') }}">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Connexion</button>

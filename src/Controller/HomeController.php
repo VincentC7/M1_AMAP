@@ -45,7 +45,7 @@ class HomeController extends Controller {
         }
          */
         $stmt = $pdo->prepare("select * from refus where utilisateur = ? and panier = ?");
-        $stmt->execute([5,$basket['id_panier']]);
+        $stmt->execute([$_SESSION['user_id'],$basket['id_panier']]);
         $has_refus = $stmt->fetch();
 
         $stmt = $pdo->prepare("select valeur,nomproduit,unite from produit WHERE valeur > 0;");

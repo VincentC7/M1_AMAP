@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS Compose (
 CREATE TABLE IF NOT EXISTS Commande (
 	id_commande SERIAL,
 	dateDemande TIMESTAMP NOT NULL,
-	statut VARCHAR(25) NOT NULL CHECK(statut in ('En attent de traitement','En cours de création', 'En attente de validation', 'Validée', 'Refusée', 'Annulée')),
+	statut VARCHAR(25) NOT NULL CHECK(statut in ('En attent de traitemente','En cours de création', 'En attente de validation', 'Validée', 'Refusée', 'Annulée')),
 	dateReponse TIMESTAMP,
 	prixTotal FLOAT(10) NOT NULL,
 	utilisateur INTEGER NOT NULL,

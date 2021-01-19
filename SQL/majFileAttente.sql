@@ -8,8 +8,12 @@ BEGIN
 			UPDATE Utilisateur set role ='Non abonné'
 			WHERE id_utilisateur = new.utilisateur;
 
-			SELECT id_abonnement, utilisateur INTO id_next_abo, id_next_user FROM abonnement
-			WHERE rang = (SELECT MIN(rang) FROM Abonnement WHERE etat = 'Sur liste d’attente');
+			SELECT id_abonnement, utilisateur INTO id_next_abo, id_next_user
+			FROM abonnement
+			WHERE rang = (SELECT MIN(rang)
+				      FROM Abonnement
+				      WHERE etat = 'Sur liste d’attente'
+				      AND trimestre = new.trimestre);
 			
 			IF id_next_user IS NOT NULL THEN
 				UPDATE Abonnement SET

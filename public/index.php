@@ -2,6 +2,7 @@
 
 use M1_CSI_Appli_AMAP\Controller\BasketController;
 use M1_CSI_Appli_AMAP\Controller\ConnectionController;
+use M1_CSI_Appli_AMAP\Controller\Controller;
 use M1_CSI_Appli_AMAP\Controller\HomeController;
 use M1_CSI_Appli_AMAP\Controller\OrderController;
 use M1_CSI_Appli_AMAP\Controller\SettingsController;
@@ -42,6 +43,7 @@ $app->add(new OldMiddleware($container->get('view')->getEnvironment()));
 // ==================== routes ====================
 //page de d'acceuil
 $app->get('/', HomeController::class.":index")->setName("home");
+$app->get('/changeDay/{day}', Controller::class.":change_day")->setName("change_day");
 
 //Connection et inscription
 $app->get('/Connexion', ConnectionController::class.":index")->setName("sign_in_page");

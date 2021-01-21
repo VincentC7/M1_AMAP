@@ -21,4 +21,12 @@ $(document).ready( function () {
         $(this).toggleClass("d-none");
         $(this).next().toggleClass("d-none");
     });
+
+    $("#progressbar li").click(function () {
+        $("#progressbar li").removeClass("active");
+        $(this).prevAll().addClass("active");
+        $(this).addClass("active");
+        let url = $(this).data("url");
+        window.location.replace(url);
+    });
 });

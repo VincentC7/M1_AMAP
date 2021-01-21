@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     $(".refuse_order_btn").click(function () {
         $(this).prev().toggleClass("d-none");
-    })
+    });
 });
 
 let total_price = 0;

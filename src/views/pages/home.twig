@@ -1,21 +1,31 @@
 {% extends "pages/layout.twig" %}
+{% set day1 = [] %}
+{% set day2 = [] %}
+{% set day3 = [] %}
+{% set day4 = [] %}
+{% set day5 = [] %}
+{% set day1 = day1|merge([5,4,3,2,1]) %}
+{% set day2 = day2|merge([5,4,3,2]) %}
+{% set day3 = day3|merge([5,4,3]) %}
+{% set day4 = day4|merge([5,4]) %}
+{% set day5 = day5|merge([5]) %}
 
 {% block content %}
     <h1 class="text-center">Bienvenue sur notre application AMAP </h1>
     <div id="progressbar_container">
         <ul id="progressbar">
-            <li class="active">Définition du panier ET ajout des produits</li>
-            <li class="active">Consulter le panier</li>
-            <li class="active">Ouverture des commandes occasionnelles</li>
-            <li>Récuperez votre panier</li>
-            <li>Service terminé pour la semaine</li>
+            <li data-url="{{ path_for("change_day", {day:1}) }}" class="{% if current_day in day1 %} active {% endif %}">Définition du panier ET ajout des produits</li>
+            <li data-url="{{ path_for("change_day", {day:2}) }}" class="{% if current_day in day2 %} active {% endif %}">Consulter le panier</li>
+            <li data-url="{{ path_for("change_day", {day:3}) }}" class="{% if current_day in day3 %} active {% endif %}">Ouverture des commandes occasionnelles</li>
+            <li data-url="{{ path_for("change_day", {day:4}) }}" class="{% if current_day in day4 %} active {% endif %}">Récuperez votre panier</li>
+            <li data-url="{{ path_for("change_day", {day:5}) }}" class="{% if current_day in day5 %} active {% endif %}">Service terminé pour la semaine</li>
         </ul>
     </div>
     <div id="week_basket" class="shadow p-3 mb-5">
         <h3 class="text-center">Pannier de la semaine</h3>
-        <div id="products" class="card-deck">
+        <div id="products" class="card-deck justify-content-center">
             {% for product in current_basket %}
-                <div class="mr-auto ml-auto mb-3 col-2">
+                <div class="mb-3 col-2">
                     <div class="product-card m-auto w-100">
                         <div class="font-weight-bold">
                             {{ product.nomproduit }}
@@ -43,21 +53,29 @@
             {% endif %}
         {% elseif user_role == "Abonné" %}
             {% if current_basket is not empty and has_refus is empty %}
-                <div class="text-center">
-                    <button class="btn btn-danger" id="cancel_basket"> Annuler mon panier </button>
-                </div>
-                <div class="text-center d-none">
-                    <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}" role="button">Valider l'annulation de mon panier </a>
-                </div>
+                {% if current_day == 2 %}
+                    <div class="text-center">
+                        <button class="btn btn-danger" id="cancel_basket"> Annuler mon panier</button>
+                    </div>
+                    <div class="text-center d-none">
+                        <a class="btn btn-danger" href="{{ path_for("cancel_basket",{id: current_basket_id}) }}"
+                           role="button">Valider l'annulation de mon panier </a>
+                    </div>
+                {% endif %}
+                {% if current_day == 4 %}
+                    <div class="font-weight-bold text-center">
+                        Votre panier est disponible allez le chercher !
+                    </div>
+                {% endif %}
             {% endif %}
         {% endif %}
     </div>
 
     <div id="week_basket" class="shadow p-3 mb-5">
         <h3 class="text-center">Pannier de la semaine dernière</h3>
-        <div id="products" class="card-deck">
+        <div id="products" class="card-deck justify-content-center">
             {% for product in last_basket %}
-                <div class="mr-auto ml-auto mb-3 col-2">
+                <div class="mb-3 col-2">
                     <div class="product-card m-auto w-100">
                         <div class="font-weight-bold">
                             {{ product.nomproduit }}
@@ -76,9 +94,9 @@
 
     <div id="week_occasional_order" class="shadow p-3 mb-5">
         <h3 class="text-center"> Produits disponibles </h3>
-        <div id="products" class="card-deck">
+        <div id="products" class="card-deck justify-content-center">
             {% for product in occasional_order %}
-                <div class="mr-auto ml-auto mb-3 col-2">
+                <div class="mb-3 col-2">
                     <div class="product-card m-auto w-100">
                         <div class="font-weight-bold">
                             {{ product.nomproduit }}
@@ -93,9 +111,14 @@
                 </div>
             {% endif %}
         </div>
-        {% if occasional_order is not empty %}
+        {% if occasional_order is not empty and current_day == 3 and (user_role == "Non abonné" or user_role == "Abonné") %}
             <div class="p-2 text-center">
                 <a class="btn btn-primary" href="{{ path_for("new_order") }}" role="button"> Commander un produit </a>
+            </div>
+        {% endif %}
+        {% if current_day != 3 %}
+            <div class="font-weight-bold text-center">
+                Les commandes occassionnelles sont disponible uniquement du lundi midi au mardi 9h
             </div>
         {% endif %}
     </div>

@@ -2,7 +2,7 @@ create or replace function verifPlaceDispo() returns trigger as $verifPlaceDispo
 begin
 IF ((SELECT nbAbonnementMax FROM Parametre)
 	-
-    (SELECT COUNT(*) FROM Abonnement WHERE etat = 'Validé' AND trimestre = trimestre)) <= 0
+    (SELECT COUNT(*) FROM utilisateur WHERE role = 'Abonné')) > 0
 	THEN
      		IF CURRENT_DATE >= (SELECT dateDebut FROM Trimestre WHERE id_trimestre = new.trimestre)
      	      	AND CURRENT_DATE <= (SELECT dateFin FROM Trimestre WHERE id_trimestre = new.trimestre)

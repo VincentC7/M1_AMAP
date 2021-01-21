@@ -9,11 +9,7 @@ BEGIN
 	WHERE id_produit = NEW.produit;
 
 	--Récupération du nombre d'abonnés
-	SELECT COUNT(*) INTO nbAbo
-	FROM abonnement, panier
-	WHERE panier.id_panier = (SELECT MAX(id_panier) FROM Panier)
-	AND panier.trimestre = abonnement.trimestre
-	AND abonnement.etat='Validé';
+    SELECT COUNT(*) INTO nbAbo from utilisateur where role = 'Abonné';
 	
 	IF (vStock - new.valeur * nbAbo) < 0 THEN
 		RAISE EXCEPTION 'Stock négatif';

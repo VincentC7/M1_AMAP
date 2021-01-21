@@ -13,9 +13,11 @@ class UserController extends Controller
 
     public function index(RequestInterface $request, ResponseInterface $response) {
         $pdo = $this->get_PDO();
+
         $stmt = $pdo->prepare("Select nom,prenom,role from utilisateur where id_utilisateur = ?");
         $stmt->execute([$_SESSION['user_id']]);
         $user = $stmt->fetch();
+        if($_SESSION['role'] != $user['role']) $_SESSION['role'] = $user['role'];
 
         $refus =[];
         if ($_SESSION['role'] == 'Abonné') {

@@ -9,11 +9,8 @@ BEGIN
 
 	RAISE NOTICE '%', vStock;
 
-	SELECT COUNT(*) INTO nbAbo
-	FROM abonnement, panier
-	WHERE panier.id_panier = (SELECT MAX(id_panier) FROM Panier)
-	AND panier.trimestre = abonnement.trimestre
-	AND abonnement.etat='Validé';
+    --Récupération du nombre d'abonnés
+    SELECT COUNT(*) INTO nbAbo from utilisateur where role = 'Abonné';
 	
 	RAISE NOTICE '%', nbAbo;
 	RAISE NOTICE '%', (vStock + old.valeur * nbAbo);

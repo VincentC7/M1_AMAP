@@ -19,12 +19,12 @@
             "method="post">
             <div class="form-group">
                 <label for="product-name">Nom du produit</label>
-                <input type="text" class="form-control" name="product-name" id="product-name" value="{% if product.nomproduit %} {{ product.nomproduit }} {% endif %}" required>
+                <input type="text" class="form-control" name="product-name" id="product-name" value="{% if product.nomproduit %}{{ product.nomproduit }}{% endif %}" required>
             </div>
             <div class="row">
                 <div class="col form-group">
                     <label for="product-qte">Quantitée</label>
-                    <input type="number" class="form-control" name="product-qte" id="product-qte" value={% if product.valeur %} {{ product.valeur }} {% endif %} required>
+                    <input type="number" step="0.01" class="form-control" name="product-qte" id="product-qte" value={% if product.valeur %} {{ product.valeur }} {% endif %} required>
                 </div>
                 <div class="col form-group">
                     <label for="product-unity">Unité</label>

@@ -48,7 +48,7 @@ class HomeController extends Controller {
         $stmt->execute([$_SESSION['user_id'],$basket['id_panier']]);
         $has_refus = $stmt->fetch();
 
-        $stmt = $pdo->prepare("select valeur,nomproduit,unite from produit WHERE valeur > 0;");
+        $stmt = $pdo->prepare("select valeur,nomproduit,unite from produit WHERE valeur > 0 and visible = true;");
         $stmt->execute();
         $occassional = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

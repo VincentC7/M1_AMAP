@@ -5,6 +5,7 @@ namespace M1_CSI_Appli_AMAP\Controller;
 
 use PDO;
 use PDOException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 
@@ -28,6 +29,7 @@ class Controller {
     public function render(ResponseInterface $response, $file, $args = []){
         $args['user_role'] = $_SESSION['role'];
         $args['user_id'] = $_SESSION['user_id'];
+        $args['current_day'] = $_SESSION['day'];
         $this->container->view->render($response,$file, $args);
     }
 
@@ -54,4 +56,11 @@ class Controller {
             return null;
         }
     }
+
+    public function change_day(RequestInterface $request, ResponseInterface $response, $args) {
+        $_SESSION['day'] = $args['day'];
+        return self::redirect($response, "home");
+    }
+
+
 }

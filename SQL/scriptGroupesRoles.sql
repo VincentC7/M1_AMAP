@@ -33,7 +33,13 @@ grant update on parametre to admin_amap;
 
 --producteur
 grant insert on produit to producteur;
+GRANT USAGE, SELECT ON SEQUENCE produit_id_produit_seq TO producteur;
 grant insert on panier to producteur;
+GRANT USAGE, SELECT ON SEQUENCE panier_id_panier_seq TO producteur;
+grant insert on amap.public.compose to producteur;
+GRANT USAGE, SELECT ON SEQUENCE compose_id_compose_seq TO producteur;
+grant update (valeur) on produit to producteur;
+grant delete on compose to producteur;
 
 --utilisateur
 grant select (nom, prenom, tel, identifiant, role,id_utilisateur) on table utilisateur to utilisateur;
@@ -44,6 +50,7 @@ grant select on panier to utilisateur;
 grant select on produit to utilisateur;
 grant select on compose to utilisateur;
 grant select on contenucommande to utilisateur;
+grant select on parametre to utilisateur;
 
 grant insert on commande to utilisateur;
 GRANT USAGE, SELECT ON SEQUENCE commande_id_commande_seq TO utilisateur;
@@ -53,8 +60,9 @@ grant insert on abonnement to utilisateur;
 GRANT USAGE, SELECT ON SEQUENCE abonnement_id_abonnement_seq TO utilisateur;
 
 grant update (nom, prenom, tel, motdepasse,role) on table utilisateur to utilisateur;
-grant update (etat) on table abonnement to utilisateur;
+grant update (etat,datedebutabo,datepaiement) on table abonnement to utilisateur;
 grant update (statut,prixtotal) on table commande to utilisateur;
+grant update (valeur) on table produit to utilisateur;
 
 --abonne
 grant insert on refus to abonne;

@@ -28,7 +28,8 @@ class OrderController extends Controller {
     public function order_save(RequestInterface $request, ResponseInterface $response) {
         $pdo = $this->get_PDO();
         $stmt = $pdo->prepare("INSERT INTO commande (datedemande, statut, prixtotal, utilisateur) VALUES (?,?,?,?)");
-        $stmt->execute([date('Y-m-d H:i:s'), self::$CREATING_ORDER , 0, $_SESSION['user_id']]);
+        $date = date('Y-m-d H:i:s');
+        $stmt->execute([$date, self::$CREATING_ORDER , 0, $_SESSION['user_id']]);
         $id = $pdo->lastInsertId();
         $params = $request->getParams();
         $total = 0;
@@ -62,11 +63,10 @@ class OrderController extends Controller {
         $delais = $delais[0]['delairefuscommande'];
         $datereponse = strtotime($datereponse['datereponse']);
         $now = strtotime(date('Y-m-d H:i:s'));
-
         if ($now - $datereponse > intval($delais)) {
             $this->afficher_message('Vous avez dépassé le délais nécessaire à la validation de votre commande, elle a été annulée', 'echec');
             $stmt = $pdo->prepare("UPDATE commande set statut = ? where id_commande = ?;");
-            $stmt->execute([self::$CANCELED_ORDER,$args['id']]);
+            $stmt->execute([self::$CANCELED_ORDER, $args['id']]);
         } else {
             $this->afficher_message('Votre commande à été validée vous pourrez aller la chercher Jeudi');
             $stmt = $pdo->prepare("UPDATE commande set statut = ? where id_commande = ?;");

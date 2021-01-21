@@ -39,19 +39,27 @@ class BasketController extends Controller
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $stmt = $pdo->prepare("INSERT INTO panier (numsemaine,trimestre) VALUES (?,?)");
-            $stmt = $pdo->prepare("INSERT INTO panier (numsemaine,trimestre) VALUES (?,?)");
             $stmt->execute([$week_number,6]);
         }
         $stmt = $pdo->prepare("Select * from produit where visible = true and valeur > 0 and id_produit not in (select produit from compose where panier = ?)");
         $stmt->execute([$basket["id_panier"]]);
         $all_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->render($response, 'pages/basket_form.twig',['week_number'=>$week_number,'year'=>$year,'basket'=>$basket,'products'=>$products,'all_products'=>$all_products]);
+
+        $stmt = $pdo->prepare("select count(id_utilisateur) as count from utilisateur where role = 'Abonné';");
+        $stmt->execute();
+        $count_user = $stmt->fetch();
+        $subscribers_count = $count_user['count'];
+        $this->render($response, 'pages/basket_form.twig',['week_number'=>$week_number,'year'=>$year,'basket'=>$basket,'products'=>$products,'all_products'=>$all_products, 'count_abo'=> $subscribers_count]);
     }
 
     public function add(RequestInterface $request, ResponseInterface $response, $args) {
         $id_basket = $args["id"];
         $pdo = $this->get_PDO();
-        $subscribers_count = 20;
+
+        $stmt = $pdo->prepare("select count(id_utilisateur) as count from utilisateur where role = 'Abonné';");
+        $stmt->execute();
+        $count_user = $stmt->fetch();
+        $subscribers_count = $count_user['count'];
 
         $params = $request->getParams();
 

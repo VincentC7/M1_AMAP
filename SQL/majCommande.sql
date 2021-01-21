@@ -15,7 +15,7 @@ BEGIN
 					RETURN new;
 				END IF;
 			END LOOP;
-			new.datereponse := CURRENT_DATE;
+			new.datereponse := now();
 			new.statut := 'En attente de validation';
 		END IF;
 		RETURN new;
